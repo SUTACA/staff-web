@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUTACA -スタッフ認証システム- ｜ ログインページ</title>
+    <link rel="stylesheet" href="src/css/login.css">
+    <link rel="stylesheet" href="src/css/Common.css">
+</head>
+
+<body>
+    <img id="logo" src="src/sutaca/textlogo/sutaca_textlogo1.png" alt="SUTACA">
+
+    <div class="title">
+        <h2>ユーザーログイン</h2>
+        <div class="title-discription">
+            許可されたoecuアカウントのみログイン可能です
+        </div>
+        <div class="title-message" id="title-message">
+            --
+        </div>
+    </div>
+    <div class="login">
+
+        <!--Googleログイン-->
+        <div class="btn btn-google" id="btn-google">
+            <img src="src/img/google_icom.webp" alt="Google">
+            <div class="btn-text">Google</div>
+        </div>
+        or
+        <!--パスワード認証-->
+        <div class="btn btn-pass">
+            <input type="text" name="user_id" placeholder="パスワード認証">
+        </div>
+        <div class="btn btn-pass-login" id="btn-pass-login">ログイン</div>
+
+    </div>
+
+    <p>ログインできない場合は<a href="tel:072-824-1056"> 大学祭実行委員会 </a>まで</p>
+</body>
+
+</html>
