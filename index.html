@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
     <title>SUTACA -スタッフ認証システム-</title>
-    <link rel="stylesheet" href="./src/CSS/Common.css">
-    <link rel="stylesheet" href="./src/CSS/QR.css">
+    <link rel="stylesheet" href="./src/css/Common.css">
+    <link rel="stylesheet" href="./src/css/QR.css">
 </head>
 
 <body>
@@ -18,7 +18,7 @@
         <canvas id="rect-canvas"></canvas>
     </div>
     <div class="scanview scan-location">読み取り場所番号：<div id="location_id">3FE0</div></div>
-    <img class="scanview cheange-logo" src="./src/img/change2.png" alt="change">
+    <img class="scanview cheange-logo" onclick="camera_change()" src="./src/img/change2.png" alt="change">
     <img class="scanview target_image" src="./src/img/QRtarget.png">
     <div class="scanview scan-message" id="scan_message">QRコードを読み取ってください</div>
     <div class="scanview scan-message2"><div class="message-description">担当者：<div id="user_name">名前</div></div> <div class="message-description">データ：<div id="data_date">2024/7/21 10:10</div></div></div>
@@ -94,7 +94,7 @@
             //QRコードの内容を表示
             document.getElementById('scan_message').innerText = qrData;
             
-            
+
             setTimeout(() => { checkImage() }, 2000);
         } else {
             console.log("QRcodeが見つかりません…", code);
@@ -125,6 +125,40 @@
         rectCtx.stroke();
     }
 
+    //カメラ切り替え
+    let count = 0;
+    function camera_change() {
+        count++;
+        if (count % 2 == 0) {
+            const media = navigator.mediaDevices.getUserMedia({ audio: false, video: { width: width, height: height } })
+                .then((stream) => {
+                    video.srcObject = stream;
+                    video.onloadeddata = () => {
+                        video.play();
+                        contentWidth = video.clientWidth;
+                        contentHeight = video.clientHeight;
+                        canvasUpdate(); // 次で記述
+                        checkImage(); // 次で記述
+                    }
+                }).catch((e) => {
+                    console.log(e);
+                });
+        } else {
+            const media = navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: "environment" } })
+                .then((stream) => {
+                    video.srcObject = stream;
+                    video.onloadeddata = () => {
+                        video.play();
+                        contentWidth = video.clientWidth;
+                        contentHeight = video.clientHeight;
+                        canvasUpdate(); // 次で記述
+                        checkImage(); // 次で記述
+                    }
+                }).catch((e) => {
+                    console.log(e);
+                });
+        }
+    };
 
 </script>
 
