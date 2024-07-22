@@ -89,6 +89,12 @@
             const audio = new Audio('./src/sound/scan.mp3');
             audio.play();
             drawRect(code.location);
+            //QRコードの内容を取得
+            const qrData = code.data;
+            //QRコードの内容を表示
+            document.getElementById('scan_message').innerText = qrData;
+            
+            
             setTimeout(() => { checkImage() }, 2000);
         } else {
             console.log("QRcodeが見つかりません…", code);
