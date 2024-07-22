@@ -70,8 +70,12 @@
         //横幅は超えない
         cvs.width = contentWidth * height / contentHeight;
 
-        ctx.translate(cvs.width, 0);
-        ctx.scale(-1, 1);
+        //左右反転
+        if(count % 2 == 0){
+            ctx.translate(cvs.width, 0);
+            ctx.scale(-1, 1);
+        }
+
         ctx.drawImage(video, 0, 0, cvs.width, cvs.height);
         ctx.setTransform(1, 0, 0, 1, 0, 0);
 
@@ -145,8 +149,6 @@
                         video.play();
                         contentWidth = video.clientWidth;
                         contentHeight = video.clientHeight;
-                        //左右反転
-                        video.style.transform = "scaleX(-1)";
                         canvasUpdate(); // 次で記述
                         checkImage(); // 次で記述
                     }
@@ -161,8 +163,6 @@
                         video.play();
                         contentWidth = video.clientWidth;
                         contentHeight = video.clientHeight;
-
-
                         canvasUpdate(); // 次で記述
                         checkImage(); // 次で記述
 
