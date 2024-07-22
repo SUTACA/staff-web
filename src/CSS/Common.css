@@ -23,6 +23,7 @@ a{
     /*左寄せ*/
     margin-right: auto;
     width: 10vw;
+
 }
 .menu-logo img{
     /*中央寄せ*/
@@ -47,6 +48,8 @@ a{
     background-color: #fff; /* メニューの背景色 */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* メニューの影 */
     transition: left 0.3s ease; /* スライドのトランジション */
+
+    z-index: 100;
 }
 .menu-items h3{
     margin: 20px 10px 10px 10px;

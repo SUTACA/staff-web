@@ -1,0 +1,91 @@
+#wrapper {
+    position: relative;
+}
+
+.scanview {
+    position: absolute;
+    z-index: 90;
+}
+
+.cheange-logo {
+    top: 120px;
+    right: 20px;
+    height: 40px;
+}
+
+.target_image {
+    /* Center */
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 35vh;
+}
+
+.scan-location {
+    /* 背景透過 */
+    background-color: rgba(255, 255, 255, 0.8);
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    display: flex;
+    width: 80vw;
+    height: 6vh;
+    border-radius: 6px;
+    justify-content: center;
+    align-items: center;
+}
+
+.scan-message2 {
+    /* Center */
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+
+    width: 80vw;
+    border-radius: 6px;
+}
+
+.message-description {
+    display: flex;
+    font-size: 20px;
+    align-items: center;
+    text-align: left;
+    padding: 5px 5px 5px 30px;
+    height: 100%;
+}
+
+.scan-message {
+    /* Center */
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+
+    width: 80vw;
+    border-radius: 6px;
+}
+
+#video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+}
+
+#camera-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 50;
+}
+
+#rect-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 90;
+}

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <title>SUTACA -スタッフ認証システム-</title>
+    <link rel="stylesheet" href="src/css/Common.css">
+    <link rel="stylesheet" href="src/css/QR.css">
+</head>
+
+<body>
+    <div id="header"></div>
+
+    <div id="wrapper">
+        <video id="video" autoplay muted playsinline></video>
+        <canvas id="camera-canvas"></canvas>
+        <canvas id="rect-canvas"></canvas>
+    </div>
+    <div class="scanview scan-location">読み取り場所番号：<div id="location_id">3FE0</div></div>
+    <img class="scanview cheange-logo" src="./src/img/change2.png" alt="change">
+    <img class="scanview target_image" src="./src/img/QRtarget.png">
+    <div class="scanview scan-message" id="scan_message">QRコードを読み取ってください</div>
+    <div class="scanview scan-message2"><div class="message-description">担当者：<div id="user_name">名前</div></div> <div class="message-description">データ：<div id="data_date">2024/7/21 10:10</div></div></div>
+
+
+</body>
+<script src="./src/JS/jsQR.js"></script>
+<script src="./src/JS/common.js"></script>
+<script>
+    //スクロール禁止
+    document.addEventListener('touchmove', function (e) { e.preventDefault(); }, { passive: false });
+    document.addEventListener('mousewheel', function (e) { e.preventDefault(); }, { passive: false });
+
+    // Webカメラの起動
+    const video = document.getElementById('video');
+    let contentWidth;
+    let contentHeight;
+    //画面サイズを取得
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    const media = navigator.mediaDevices.getUserMedia({ audio: false, video: { width: width, height: height } })
+        .then((stream) => {
+            video.srcObject = stream;
+            video.onloadeddata = () => {
+                video.play();
+                contentWidth = video.clientWidth;
+                contentHeight = video.clientHeight;
+                canvasUpdate(); // 次で記述
+                checkImage(); // 次で記述
+            }
+        }).catch((e) => {
+            console.log(e);
+        });
+
+
+    // カメラ映像のキャンバス表示
+    const cvs = document.getElementById('camera-canvas');
+    const ctx = cvs.getContext('2d');
+    const canvasUpdate = () => {
+        //縦横比を保ったままリサイズ
+        cvs.height = height;
+        //横幅は超えない
+        cvs.width = contentWidth * height / contentHeight;
+
+        ctx.translate(cvs.width, 0);
+        ctx.scale(-1, 1);
+        ctx.drawImage(video, 0, 0, cvs.width, cvs.height);
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+
+        requestAnimationFrame(canvasUpdate);
+    }
+
+
+    // QRコードの検出
+    const rectCvs = document.getElementById('rect-canvas');
+    const rectCtx = rectCvs.getContext('2d');
+    const checkImage = () => {
+        // imageDataを作る
+        const imageData = ctx.getImageData(0, 0, contentWidth, contentHeight);
+        // jsQRに渡す
+        const code = jsQR(imageData.data, contentWidth, contentHeight);
+
+        // 検出結果に合わせて処理を実施
+        if (code) {
+            console.log("QRcodeが見つかりました", code);
+            //scan.mp3を再生
+            const audio = new Audio('./src/sound/scan.mp3');
+            audio.play();
+            drawRect(code.location);
+            setTimeout(() => { checkImage() }, 2000);
+        } else {
+            console.log("QRcodeが見つかりません…", code);
+            rectCtx.clearRect(0, 0, contentWidth, contentHeight);
+            setTimeout(() => { checkImage() }, 500);
+        }
+       
+    }
+
+
+    // 四辺形の描画
+    const drawRect = (location) => {
+        rectCvs.width = contentWidth;
+        rectCvs.height = contentHeight;
+        drawLine(location.topLeftCorner, location.topRightCorner);
+        drawLine(location.topRightCorner, location.bottomRightCorner);
+        drawLine(location.bottomRightCorner, location.bottomLeftCorner);
+        drawLine(location.bottomLeftCorner, location.topLeftCorner)
+    }
+
+    // 線の描画
+    const drawLine = (begin, end) => {
+        rectCtx.lineWidth = 4;
+        rectCtx.strokeStyle = "#red";
+        rectCtx.beginPath();
+        rectCtx.moveTo(begin.x, begin.y);
+        rectCtx.lineTo(end.x, end.y);
+        rectCtx.stroke();
+    }
+
+
+</script>
+
+</html>
