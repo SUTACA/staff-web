@@ -1,6 +1,20 @@
 {
     "name": "SUTACA -スタッフ認証システム-",
-    "version": "1.0.1",
+    "siteTitle": "-SUTACA-",
+    "version": "1.0.2",
     "loginAttempt": 5,
-    "loginAttemptTime": 5
+    "loginAttemptTime": 5,
+
+    "errorMessage":{
+        "loginError1":"ログインに失敗しました。<br>アカウント情報を確認してください。",
+        "sessionError":"セッションの有効期限が切れました。<br>再度ログインしてください。"
+    },
+
+
+    "organization":{
+        "name": "大阪電気通信大学 大学祭実行委員会",
+        "shortName": " 大学祭実行委員会 ",
+        "address": "〒572-8530 大阪府寝屋川市初町18-8 大阪電気通信大学 P号館104号室",
+        "tel": "072-824-1056"
+    }
 }

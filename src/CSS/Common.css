@@ -33,8 +33,17 @@ a{
 
 }
 
+.menu-icom{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 10vw;
+}
+
 .menu-icom img{
     /*右寄せ*/
+    border-radius: 5px;
+    background-color: #333;
     margin-left: auto;
     width: 10vw;
 }

@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SUTACA -スタッフ認証システム- ｜ ログインページ</title>
+    <title>ログインページ</title>
+
+    <link rel="icon" href="./src/sutaca/icom/sutaca_icom1.png">
     <link rel="stylesheet" href="./src/CSS/login.css">　
     <link rel="stylesheet" href="./src/CSS/Common.css">
     <script src="./src/JS/common.js"></script>
@@ -19,7 +21,6 @@
             許可されたoecuアカウントのみログイン可能です
         </div>
         <div class="title-message error" id="title-message">
-            
         </div>
     </div>
     <div class="login">
@@ -38,11 +39,11 @@
 
     </div>
 
-    <p>ログインできない場合は<a href="tel:072-824-1056"> 大学祭実行委員会 </a>まで</p>
-    <br>
-    <!--バージョン config.jsonから取得表示-->
+
+    <!--自動入力（config.json）-->
+    <p>ログインできない場合は<a class="tel">（自動入力）</a>まで</p>
     <p class="version">v0.0.2</p>
-    
+
 </body>
 <script src="./src/JS/login.js"></script>
 

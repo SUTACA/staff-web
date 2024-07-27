@@ -11,14 +11,14 @@
 }
 .title-message{
     color: #FF0000;
-    margin-top: 10px;
+    margin: 10px 0;
     height: 20px;
     font-size: 15px;
 }
 
 .login{
     width: 80vw;
-    margin: 40px auto;
+    margin: 30px auto;
     display: block;
 }
 
