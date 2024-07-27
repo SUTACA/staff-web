@@ -7,6 +7,7 @@
     <title>SUTACA -スタッフ認証システム- ｜ ログインページ</title>
     <link rel="stylesheet" href="./src/CSS/login.css">　
     <link rel="stylesheet" href="./src/CSS/Common.css">
+    <script src="./src/JS/common.js"></script>
 </head>
 
 <body>
@@ -17,8 +18,8 @@
         <div class="title-discription">
             許可されたoecuアカウントのみログイン可能です
         </div>
-        <div class="title-message" id="title-message">
-            --
+        <div class="title-message error" id="title-message">
+            
         </div>
     </div>
     <div class="login">
@@ -33,11 +34,16 @@
         <div class="btn btn-pass">
             <input type="text" name="user_id" placeholder="パスワード認証">
         </div>
-        <div class="btn btn-pass-login" id="btn-pass-login">ログイン</div>
+        <div class="btn btn-pass-login" id="btn-pass-login" onclick="login()">ログイン</div>
 
     </div>
 
     <p>ログインできない場合は<a href="tel:072-824-1056"> 大学祭実行委員会 </a>まで</p>
+    <br>
+    <!--バージョン config.jsonから取得表示-->
+    <p class="version">v0.0.2</p>
+    
 </body>
+<script src="./src/JS/login.js"></script>
 
 </html>

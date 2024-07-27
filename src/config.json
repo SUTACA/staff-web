@@ -1,0 +1,6 @@
+{
+    "name": "SUTACA -スタッフ認証システム-",
+    "version": "1.0.1",
+    "loginAttempt": 5,
+    "loginAttemptTime": 5
+}

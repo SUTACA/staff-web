@@ -11,7 +11,9 @@
 }
 .title-message{
     color: #FF0000;
-    margin-top: 0px;
+    margin-top: 10px;
+    height: 20px;
+    font-size: 15px;
 }
 
 .login{
@@ -69,4 +71,8 @@
 .btn-pass-login:hover{
     background-color: #acacac;
     color: #000000;
+}
+
+.version{
+    text-align: center!important;
 }
