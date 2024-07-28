@@ -28,13 +28,11 @@ var sessionData = {
 
     "sessionExpire":"",//セッションの有効期限(シリアル値)
     "sessionExpire2":"",//セッションの有効期限（日付）
-
     "loginTime": "",//ログイン時間（シリアル値）
     "loginTime2": "",//ログイン時間（日付）
+
     "data": {},//データ
-
-    "volume": 0.5,//音量
-
+    "locationId": "",//スキャンポイント
 };
 //login.html以外だったら実行
 if (location.pathname != '/login.html') {

@@ -126,7 +126,6 @@ a{
     z-index: 99;
     animation: fadeIn 0.5s;
 }
-
 /*fadein*/
 @keyframes fadeIn{
     from{

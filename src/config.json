@@ -5,7 +5,7 @@
     "loginAttempt": 5,
     "loginAttemptTime": 5,
     "loginSessionTime": 1,
-
+    "volume":50,
     "errorMessage":{
         "loginError1":"ログインに失敗しました。<br>アカウント情報を確認してください。",
         "loginError2":"セッションの有効期限が切れました。<br>再度ログインしてください。",

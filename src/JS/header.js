@@ -1,3 +1,5 @@
+config = JSON.parse(sessionStorage.getItem('config'));
+
 // メニューを閉じる(beforeをクリックした時)
 window.addEventListener('click', function (e) {
     var menuItems = document.getElementById('menuItems');
@@ -8,6 +10,11 @@ window.addEventListener('click', function (e) {
     }
 });
 
+function closeMenu() {
+    menuItems.classList.remove('open');
+    document.getElementById('background1').style.display = 'none';
+}
+
 function toggleMenu() {
     var menuItems = document.getElementById('menuItems');
     menuItems.classList.toggle('open');
@@ -16,26 +23,68 @@ function toggleMenu() {
 
 
 function logout() {
+    closeMenu()
     sessionStorage.removeItem('sessionData');
     location.href = './login.html';
 }
 
+function changeLocation(){
+    closeMenu()
+    Swal.fire({
+        title: '読み取り場所番号を<br>入力してください。',
+        input: 'text',
+        inputAttributes: {
+            autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        confirmButtonText: '保存',
+        cancelButtonText: 'キャンセル',
+        showLoaderOnConfirm: true,
+        inputPlaceholder: '現在: '+sessionData1.locationId,
+
+        preConfirm: (locationId) => {
+            //16進数かどうかチェック
+            if (!/^[0-9A-Fa-f]{1,4}$/.test(locationId)) {
+                Swal.showValidationMessage('4桁の数字を入力してください。');
+            }
+            sessionData1.locationId = locationId;
+            sessionStorage.setItem('sessionData', JSON.stringify(sessionData1));
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: `読み取り場所番号が保存されました。`,
+                icon: 'success'
+            });
+            load();
+        }
+    });
+}
+
 function changeVolume() {
-    //vol.調整ポップアップ
-    var volumePopup = document.getElementById('volumePopup');
-    volumePopup.classList.toggle('open');
-
-    //音量調整
-    var volume = document.getElementById('volume');
-    var bgm = document.getElementById('bgm');
-    volume.oninput = function () {
-        bgm.volume = volume.value / 100;
-    }
-
-    //音量調整ポップアップを閉じる
-    var closeVolumePopup = document.getElementById('closeVolumePopup');
-    closeVolumePopup.onclick = function () {
-        volumePopup.classList.remove('open');
-    }
-    
+    //音量変更　音量をセッションストレージに保存
+    //調整用のポップアップをSweetAlertで表示
+    closeMenu()
+    Swal.fire({
+        title: '音量を変更してください。',
+        input: 'range',
+        inputAttributes: {
+            min: 0,
+            max: 100,
+            step: 1
+        },
+        inputValue: config.volume == undefined ? 50 : config.volume,
+        showCancelButton: true,
+        confirmButtonText: '保存',
+        cancelButtonText: 'キャンセル',
+        inputAttributes: {
+            autocapitalize: 'off'
+        },
+        preConfirm: (volume) => {
+            config.volume = volume;
+            sessionStorage.setItem('config', JSON.stringify(config));
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+    });
 }
