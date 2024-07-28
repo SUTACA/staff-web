@@ -7,7 +7,10 @@ if (location.search) {
         document.querySelector('.error').innerHTML = config.errorMessage.loginError1;
     }
     if (error == 2) {
-        document.querySelector('.error').innerHTML = config.errorMessage.sessionError;
+        document.querySelector('.error').innerHTML = config.errorMessage.loginError2;
+    }
+    if (error == 3) {
+        document.querySelector('.error').innerHTML = config.errorMessage.loginError3;
     }
 
     //sessionStorageのログインエラー回数を追加,ログイン失敗時間もセット（なければ作成1をセット）

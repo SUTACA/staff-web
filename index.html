@@ -11,7 +11,7 @@
 
 <body>
     <div id="header"></div>
-
+    <div id="background1"></div>
     <div id="wrapper">
         <video id="video" autoplay muted playsinline></video>
         <canvas id="camera-canvas"></canvas>
@@ -28,8 +28,6 @@
         <div class="message-description">データ：<div id="data_date">2024/7/21 10:10</div>
         </div>
     </div>
-
-
 </body>
 <script>
     //スクロール禁止
@@ -69,7 +67,7 @@
         cvs.width = contentWidth * height / contentHeight;
 
         //左右反転
-        if(count % 2 == 0){
+        if (count % 2 == 0) {
             ctx.translate(cvs.width, 0);
             ctx.scale(-1, 1);
         }
