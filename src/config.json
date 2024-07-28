@@ -1,7 +1,7 @@
 {
     "name": "SUTACA -スタッフ認証システム-",
     "siteTitle": "-SUTACA-",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "loginAttempt": 5,
     "loginAttemptTime": 5,
     "loginSessionTime": 1,
