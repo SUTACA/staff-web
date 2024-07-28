@@ -31,21 +31,21 @@ function logout() {
 function changeLocation(){
     closeMenu()
     Swal.fire({
-        title: '読み取り場所番号を<br>入力してください。',
+        title: config.systemMessage.locationMessage1,
         input: 'text',
         inputAttributes: {
             autocapitalize: 'off'
         },
         showCancelButton: true,
-        confirmButtonText: '保存',
-        cancelButtonText: 'キャンセル',
+        confirmButtonText: config.systemMessage.save,
+        cancelButtonText: config.systemMessage.cancel,
         showLoaderOnConfirm: true,
         inputPlaceholder: '現在: '+sessionData1.locationId,
 
         preConfirm: (locationId) => {
             //16進数かどうかチェック
             if (!/^[0-9A-Fa-f]{1,4}$/.test(locationId)) {
-                Swal.showValidationMessage('4桁の数字を入力してください。');
+                Swal.showValidationMessage(config.errorMessage.locationError1);
             }
             sessionData1.locationId = locationId;
             sessionStorage.setItem('sessionData', JSON.stringify(sessionData1));
@@ -54,7 +54,7 @@ function changeLocation(){
     }).then((result) => {
         if (result.isConfirmed) {
             Swal.fire({
-                title: `読み取り場所番号が保存されました。`,
+                title: config.systemMessage.locationMessage2,
                 icon: 'success'
             });
             load();
@@ -67,7 +67,7 @@ function changeVolume() {
     //調整用のポップアップをSweetAlertで表示
     closeMenu()
     Swal.fire({
-        title: '音量を変更してください。',
+        title: '音量調整',
         input: 'range',
         inputAttributes: {
             min: 0,
@@ -76,8 +76,8 @@ function changeVolume() {
         },
         inputValue: config.volume == undefined ? 50 : config.volume,
         showCancelButton: true,
-        confirmButtonText: '保存',
-        cancelButtonText: 'キャンセル',
+        confirmButtonText: config.systemMessage.save,
+        cancelButtonText: config.systemMessage.cancel,
         inputAttributes: {
             autocapitalize: 'off'
         },

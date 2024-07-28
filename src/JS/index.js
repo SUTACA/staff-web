@@ -1,4 +1,5 @@
 const sessionData1 = JSON.parse(sessionStorage.getItem('sessionData'));
+config = JSON.parse(sessionStorage.getItem('config'));
 let permission;
 console.log(sessionData1);
 
@@ -15,20 +16,20 @@ function load() {
 //scanPointがない場合は読み取りSweetAlertを表示させて入力を受け付けて保存する。（キャンセルはなし）
 if (!sessionData1.locationId) {
     Swal.fire({
-        title: '読み取り場所番号を<br>入力してください。',
+        title: config.systemMessage.locationMessage1,
         input: 'text',
         inputAttributes: {
             autocapitalize: 'off'
         },
         showCancelButton: false,
-        confirmButtonText: '保存',
+        confirmButtonText: config.systemMessage.save,
         showLoaderOnConfirm: true,
         inputPlaceholder: '例: 1234',
 
         preConfirm: (locationId) => {
             //16進数かどうかチェック
             if (!/^[0-9A-Fa-f]{1,4}$/.test(locationId)) {
-                Swal.showValidationMessage('4桁の数字を入力してください。');
+                Swal.showValidationMessage(config.errorMessage.locationError1);
             }
             sessionData1.locationId = locationId;
             sessionStorage.setItem('sessionData', JSON.stringify(sessionData1));
@@ -37,7 +38,7 @@ if (!sessionData1.locationId) {
     }).then((result) => {
         if (result.isConfirmed) {
             Swal.fire({
-                title: `読み取り場所番号が保存されました。`,
+                title: config.systemMessage.locationMessage2,
                 icon: 'success'
             });
             load();

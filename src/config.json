@@ -1,7 +1,7 @@
 {
     "name": "SUTACA -スタッフ認証システム-",
     "siteTitle": "-SUTACA-",
-    "version": "1.0.2",
+    "version": "1.0.5",
     "loginAttempt": 5,
     "loginAttemptTime": 5,
     "loginSessionTime": 1,
@@ -9,9 +9,15 @@
     "errorMessage":{
         "loginError1":"ログインに失敗しました。<br>アカウント情報を確認してください。",
         "loginError2":"セッションの有効期限が切れました。<br>再度ログインしてください。",
-        "loginError3":"不正な画面移行です。<br>再度ログインしてください。"
+        "loginError3":"不正な画面移行です。<br>再度ログインしてください。",
+        "locationError1":"【エラー】4桁の英数字を入力してください。"
     },
-
+    "systemMessage":{
+        "locationMessage1":"読み取り場所番号を<br>入力してください。",
+        "locationMessage2":"読み取り場所番号が<br>保存されました。",
+        "save":"保存",
+        "cancel":"キャンセル"
+    },
 
     "organization":{
         "name": "大阪電気通信大学 大学祭実行委員会",
