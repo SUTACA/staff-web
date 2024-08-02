@@ -1,5 +1,3 @@
-config = JSON.parse(sessionStorage.getItem('config'));
-
 // メニューを閉じる(beforeをクリックした時)
 window.addEventListener('click', function (e) {
     var menuItems = document.getElementById('menuItems');

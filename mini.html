@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <title>SUTACA -スタッフ認証システム-</title>
+    <link rel="stylesheet" href="./src/CSS/Common.css">
+    <link rel="stylesheet" href="./src/CSS/QR.css">
+</head>
+<body>
+    <div id="header"></div>
+    <div id="background1"></div>
+
+    <style>
+        #gameCanvas {
+            /*上下中央*/
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            max-width: 400px;
+            height: 250px;
+        }
+    </style>
+
+    <!--横幅取得最大-->
+    <canvas id="gameCanvas" width="400" height="250"></canvas>
+    <script src="game.js"></script>
+
+    <script src="./src/JS/game.js"></script>
+</body>
+<script src="./src/JS/common.js"></script>
+<script src="./src/JS/header.js"></script>
+<script src="./src/JS/index.js"></script>
+</html>

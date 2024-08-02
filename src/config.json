@@ -4,7 +4,7 @@
     "version": "1.0.6",
     "loginAttempt": 5,
     "loginAttemptTime": 5,
-    "loginSessionTime": 1,
+    "loginSessionTime": 5,
     "volume":50,
     "errorMessage":{
         "loginError1":"ログインに失敗しました。<br>アカウント情報を確認してください。",

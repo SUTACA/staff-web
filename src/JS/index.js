@@ -1,7 +1,4 @@
-const sessionData1 = JSON.parse(sessionStorage.getItem('sessionData'));
-config = JSON.parse(sessionStorage.getItem('config'));
-let permission;
-console.log(sessionData1);
+
 
 function load() {
     setTimeout(() => {

@@ -1,3 +1,9 @@
+config = JSON.parse(sessionStorage.getItem('config'));
+const sessionData1 = JSON.parse(sessionStorage.getItem('sessionData'));
+config = JSON.parse(sessionStorage.getItem('config'));
+let permission;
+console.log(sessionData1);
+
 fetch("./header.html")
 .then((response) => response.text())
 .then((data) => {if(location.pathname != '/login.html'){document.querySelector("#header").innerHTML = data}});
@@ -50,7 +56,7 @@ if (location.pathname != '/login.html') {
         sessionStorage.setItem('sessionData', JSON.stringify(sessionData));
         }
         //メインコンテンツの表示
-        if(location.pathname != '/index.html'){
+        if(location.pathname != '/index.html' && location.pathname != '/mini.html'){
             location.href = './index.html';
         }
     } else {
