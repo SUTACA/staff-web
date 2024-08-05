@@ -1,6 +1,6 @@
    //スクロール禁止
-   document.addEventListener('touchmove', function (e) { e.preventDefault(); }, { passive: false });
-   document.addEventListener('mousewheel', function (e) { e.preventDefault(); }, { passive: false });
+   //document.addEventListener('touchmove', function (e) { e.preventDefault(); }, { passive: false });
+   //document.addEventListener('mousewheel', function (e) { e.preventDefault(); }, { passive: false });
 
    // Webカメラの起動
    const video = document.getElementById('video');
