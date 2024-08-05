@@ -19,6 +19,7 @@ a{
     padding: 15px 10px;
     background-color: #ffffff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 100;
 }
 .menu img{
     width: 10vw;
@@ -81,8 +82,8 @@ a{
     /*上下中央　左揃え*/
     display: flex;
     align-items: center;
-    padding: 10px 20px;
-    height: 50px;
+    padding: 10px 15px;
+    height: 25px;
     border-bottom: 1px solid #ccc;
 }
 
