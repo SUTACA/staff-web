@@ -20,11 +20,12 @@ a{
     background-color: #ffffff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+.menu img{
+    width: 10vw;
+}
 .menu-bar img{
     /*左寄せ*/
     margin-right: auto;
-    width: 10vw;
-
 }
 .menu-logo img{
     /*中央寄せ*/
@@ -37,7 +38,6 @@ a{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 10vw;
 }
 
 .menu-icom img{
@@ -45,7 +45,6 @@ a{
     border-radius: 5px;
     background-color: #333;
     margin-left: auto;
-    width: 10vw;
 }
 
   /* 新しいスタイル */
@@ -144,7 +143,6 @@ a{
         opacity: 1;
     }
 }
-
 
 .back-to-main-button {
     z-index: 1000; /* ボタンを最前面に表示 */
