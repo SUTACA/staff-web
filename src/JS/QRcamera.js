@@ -2,6 +2,7 @@
 //document.addEventListener('touchmove', function (e) { e.preventDefault(); }, { passive: false });
 //document.addEventListener('mousewheel', function (e) { e.preventDefault(); }, { passive: false });
 
+
 // Webカメラの起動
 const video = document.getElementById('video');
 let contentWidth;
@@ -13,16 +14,16 @@ const height = window.innerHeight;
 
 // キャンバスのリサイズを行う関数
 const resizeCanvas = () => {
-    const videoAspectRatio = video.videoWidth / video.videoHeight;
-    const canvasAspectRatio = width / height;
+    // キャンバスのサイズを画面サイズに合わせる
+    cvs.width = width;
+    cvs.height = height;
+    //縦横比を維持したままキャンバスをリサイズ(ちゃんと中央に表示されるように)
+    const scale = Math.min(width / contentWidth, height / contentHeight);
+    const x = (width - contentWidth * scale) / 2;
+    const y = (height - contentHeight * scale) / 2;
+    ctx.setTransform(scale, 0, 0, scale, x, y);
 
-    if (canvasAspectRatio > videoAspectRatio) {
-        cvs.width = height * videoAspectRatio;
-        cvs.height = height;
-    } else {
-        cvs.width = width;
-        cvs.height = width / videoAspectRatio;
-    }
+
 
     // キャンバスの中心を画面の中心に合わせる
     const xOffset = (width - cvs.width) / 2;
@@ -113,8 +114,7 @@ let count = 0;
 function camera_change() {
     closeMenu();
     count++;
-    const constraints = count % 2 === 0 ? { audio: false, video: { width: width, height: height } } : { audio: false, video: { facingMode: "environment" } };
-    
+    const constraints = count % 2 === 0 ? { audio: false, video: { width: width, height: height } } : { audio: false, video: { width: width, height: height} };
     navigator.mediaDevices.getUserMedia(constraints)
         .then((stream) => {
             video.srcObject = stream;

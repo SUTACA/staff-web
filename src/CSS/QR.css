@@ -1,8 +1,5 @@
 #wrapper {
     position: relative;
-    width: 100%;
-    height: 100vh; /* ビューポートの高さを設定 */
-    overflow: hidden;
 }
 
 .scanview {
@@ -46,9 +43,9 @@
     transform: translate(-50%, -50%);
     font-size: 20px;
     background-color: rgba(255, 255, 255, 0.8);
+
     width: 80vw;
     border-radius: 6px;
-    padding: 10px;
 }
 
 .message-description {
@@ -67,38 +64,38 @@
     transform: translate(-50%, -50%);
     font-size: 20px;
     background-color: rgba(255, 255, 255, 0.8);
+
     width: 80vw;
     border-radius: 6px;
-    padding: 10px;
 }
 
 #video {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* ビデオがキャンバス全体を覆うように */
     visibility: hidden;
 }
 
-#camera-canvas,
-#rect-canvas {
+#camera-canvas {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-#camera-canvas {
     z-index: 50;
 }
 
 #rect-canvas {
-    z-index: 80;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 90;
 }
 
-#backbutton {
+#backbutton{
     display: none;
+}
+
+#video, #camera-canvas, #rect-canvas {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
 }
