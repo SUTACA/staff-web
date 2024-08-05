@@ -13,21 +13,21 @@ const height = window.innerHeight;
 
 // キャンバスのリサイズを行う関数
 const resizeCanvas = () => {
-    const aspectRatio = video.videoWidth / video.videoHeight;
+    const videoAspectRatio = video.videoWidth / video.videoHeight;
     const canvasAspectRatio = width / height;
 
-    if (canvasAspectRatio > aspectRatio) {
-        cvs.width = height * aspectRatio;
+    if (canvasAspectRatio > videoAspectRatio) {
+        cvs.width = height * videoAspectRatio;
         cvs.height = height;
     } else {
         cvs.width = width;
-        cvs.height = width / aspectRatio;
+        cvs.height = width / videoAspectRatio;
     }
 
     // キャンバスの中心を画面の中心に合わせる
     const xOffset = (width - cvs.width) / 2;
     const yOffset = (height - cvs.height) / 2;
-    ctx.translate(xOffset, yOffset);
+    ctx.setTransform(1, 0, 0, 1, xOffset, yOffset);
 }
 
 // カメラ映像のキャンバス表示
@@ -35,13 +35,17 @@ const cvs = document.getElementById('camera-canvas');
 const ctx = cvs.getContext('2d');
 const canvasUpdate = () => {
     resizeCanvas();
+    ctx.clearRect(0, 0, cvs.width, cvs.height); // キャンバスをクリア
     // 左右反転
     if (count % 2 == 0) {
+        ctx.save(); // 現在の状態を保存
         ctx.translate(cvs.width, 0);
         ctx.scale(-1, 1);
     }
     ctx.drawImage(video, 0, 0, cvs.width, cvs.height);
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    if (count % 2 == 0) {
+        ctx.restore(); // 保存した状態を復元
+    }
     requestAnimationFrame(canvasUpdate);
 }
 
@@ -125,3 +129,11 @@ function camera_change() {
             console.log(e);
         });
 }
+
+// ウィンドウのリサイズ対応
+window.addEventListener('resize', () => {
+    // 画面サイズを再取得
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvasUpdate(); // リサイズ後にキャンバスを更新
+});
