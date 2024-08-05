@@ -32,13 +32,13 @@
        //縦横比を保ったままリサイズ
        cvs.height = height;
        //横幅は超えない
-       cvs.width = contentWidth * height / contentHeight;
-
+       cvs.width = width
        //左右反転
        if (count % 2 == 0) {
            ctx.translate(cvs.width, 0);
            ctx.scale(-1, 1);
        }
+       //サイズを変更
 
        ctx.drawImage(video, 0, 0, cvs.width, cvs.height);
        ctx.setTransform(1, 0, 0, 1, 0, 0);
