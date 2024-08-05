@@ -1,46 +1,269 @@
-<html>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            color: #828282;
+            background-color: #F5F5F5;
+            text-align: center;
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        a {
+            text-decoration: none;
+            color: #000000;
+        }
+
+        .menu {
+            margin: 0 !important;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 10px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu-bar img {
+            margin-right: auto;
+            width: 10vw;
+        }
+
+        .menu-logo img {
+            margin: 0 auto;
+            width: 60%;
+        }
+
+        .menu-icom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 10vw;
+        }
+
+        .menu-icom img {
+            border-radius: 5px;
+            background-color: #333;
+            margin-left: auto;
+            width: 10vw;
+        }
+
+        .menu-items {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: left 0.3s ease;
+            z-index: 100;
+        }
+
+        .menu-items h3 {
+            margin: 20px 10px 10px 10px;
+        }
+
+        .menu-items.open {
+            left: 0;
+        }
+
+        .menu-items ul {
+            text-align: left;
+            list-style-type: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .menu-items ul li {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            height: 50px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .menu-items ul li p {
+            margin-left: 10px;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .menu-items ul li img {
+            height: 30px;
+        }
+
+        .menu-items ul li:hover {
+            background-color: #f5f5f5;
+        }
+
+        .logout {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 20px 0;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .logout img {
+            margin-right: auto;
+            width: 5vw;
+            position: absolute;
+            left: 60px;
+            top: 19px;
+        }
+
+        .version {
+            margin: 20px 20px;
+            text-align: right;
+        }
+
+        #background1 {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 99;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .back-to-main-button {
+            z-index: 1000;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 120px;
+            height: 50px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 16px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .button-icon {
+            font-size: 20px;
+            margin-right: 8px;
+        }
+
+        .button-text {
+            display: inline-block;
+        }
+
+        .back-to-main-button:hover {
+            background-color: #0056b3;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* スマホ用のスタイル調整 */
+        @media (max-width: 768px) {
+            .menu-bar img {
+                width: 20vw;
+            }
+
+            .menu-logo img {
+                width: 50%;
+            }
+
+            .menu-icom {
+                width: 20vw;
+            }
+
+            .menu-icom img {
+                width: 20vw;
+            }
+        }
+    </style>
+</head>
 <body>
     <div id="background1"></div>
     <div class="menu">
         <div class="menu-bar" onclick="toggleMenu()">
             <img src="./src/img/bar.png" alt="menu">
         </div>
-            <div class="menu-logo">
-                <img src="./src/sutaca/textlogo/sutaca_textlogo4_transparent.png" alt="SUTACA">
-            </div>
-            <div class="menu-icom">
-                <img class="menu-icom-src" src="./src/img/change.png" alt="">
-            </div>
+        <div class="menu-logo">
+            <img src="./src/sutaca/textlogo/sutaca_textlogo4_transparent.png" alt="SUTACA">
         </div>
-
-
-        <div class="menu-items" id="menuItems">
-            <!-- メニューアイテムをここに追加 -->
-            <h2>メニュー</h2>
-            <ul>
-                <h3>設定</h3>
-                <li class="barmenu" onclick="camera_change()"><img src="./src/img/change.png"><p>カメラを切り替える</p></li>
-                <li class="barmenu" onclick="changeLocation()"><img src="./src/img/location.png"><p>読み取り場所変更</p></li>
-                <li class="barmenu" onclick="changeVolume()"><img src="./src/img/volume.png"><p>音量調整</p></li>
-                <h3>情報</h3>
-                <li class="barmenu"><img src="./src/img/refresh.png"><p>データ更新（未実装）</p></li>
-                <li class="barmenu" onclick="logout()"><img src="./src/img/logout.png"><p>ログアウト</p></li>
-                
-                <h3>その他</h3>
-                <li class="barmenu" onclick="location.href='./qanda.html'"><img src="./src/img/volume.png"><p>運営用よくある質問</p></li>
-                <li class="barmenu" onclick="location.href='./dino.html'"><img src="./src/img/volume.png"><p>ミニゲーム</p></li>
-                <div class="version">v0.0.2</div>
-                <div class="logout"><img src="./src/img/logout.png">ログアウト</div>
-                
-                <!-- 必要なだけ項目を追加 -->
-            </ul>
+        <div class="menu-icom">
+            <img class="menu-icom-src" src="./src/img/change.png" alt="">
         </div>
+    </div>
 
-         <!-- メインに戻るボタン -->
+    <div class="menu-items" id="menuItems">
+        <h2>メニュー</h2>
+        <ul>
+            <h3>設定</h3>
+            <li class="barmenu" onclick="camera_change()">
+                <img src="./src/img/change.png">
+                <p>カメラを切り替える</p>
+            </li>
+            <li class="barmenu" onclick="changeLocation()">
+                <img src="./src/img/location.png">
+                <p>読み取り場所変更</p>
+            </li>
+            <li class="barmenu" onclick="changeVolume()">
+                <img src="./src/img/volume.png">
+                <p>音量調整</p>
+            </li>
+            <h3>情報</h3>
+            <li class="barmenu">
+                <img src="./src/img/refresh.png">
+                <p>データ更新（未実装）</p>
+            </li>
+            <li class="barmenu" onclick="logout()">
+                <img src="./src/img/logout.png">
+                <p>ログアウト</p>
+            </li>
+            <h3>その他</h3>
+            <li class="barmenu" onclick="location.href='./qanda.html'">
+                <img src="./src/img/volume.png">
+                <p>運営用よくある質問</p>
+            </li>
+            <li class="barmenu" onclick="location.href='./dino.html'">
+                <img src="./src/img/volume.png">
+                <p>ミニゲーム</p>
+            </li>
+            <div class="version">v0.0.2</div>
+            <div class="logout">
+                <img src="./src/img/logout.png">ログアウト
+            </div>
+        </ul>
+    </div>
+
     <a href="index.html" class="back-to-main-button" id="backbutton">
         <span class="button-icon">&#x21A9;</span>
         <span class="button-text">戻る</span>
     </a>
-</body>
 
+    <script>
+        function toggleMenu() {
+            const menuItems = document.getElementById('menuItems');
+            const background = document.getElementById('background1');
+            menuItems.classList.toggle('open');
+            background.style.display = menuItems.classList.contains('open') ? 'block' : 'none';
+        }
+    </script>
+</body>
 </html>
