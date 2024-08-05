@@ -11,16 +11,23 @@ let contentHeight;
 const width = window.innerWidth;
 const height = window.innerHeight;
 
-// ウィンドウのリサイズに対応するための関数
+// キャンバスのリサイズを行う関数
 const resizeCanvas = () => {
     const aspectRatio = video.videoWidth / video.videoHeight;
-    if (width / height > aspectRatio) {
+    const canvasAspectRatio = width / height;
+
+    if (canvasAspectRatio > aspectRatio) {
         cvs.width = height * aspectRatio;
         cvs.height = height;
     } else {
         cvs.width = width;
         cvs.height = width / aspectRatio;
     }
+
+    // キャンバスの中心を画面の中心に合わせる
+    const xOffset = (width - cvs.width) / 2;
+    const yOffset = (height - cvs.height) / 2;
+    ctx.translate(xOffset, yOffset);
 }
 
 // カメラ映像のキャンバス表示
@@ -57,8 +64,8 @@ const media = navigator.mediaDevices.getUserMedia({ audio: false, video: { width
 const rectCvs = document.getElementById('rect-canvas');
 const rectCtx = rectCvs.getContext('2d');
 const checkImage = () => {
-    const imageData = ctx.getImageData(0, 0, contentWidth, contentHeight);
-    const code = jsQR(imageData.data, contentWidth, contentHeight);
+    const imageData = ctx.getImageData(0, 0, cvs.width, cvs.height);
+    const code = jsQR(imageData.data, cvs.width, cvs.height);
 
     if (code) {
         console.log("QRcodeが見つかりました", code);
@@ -71,15 +78,15 @@ const checkImage = () => {
         setTimeout(() => { checkImage() }, 2000);
     } else {
         console.log("QRcodeが見つかりません…", code);
-        rectCtx.clearRect(0, 0, contentWidth, contentHeight);
+        rectCtx.clearRect(0, 0, cvs.width, cvs.height);
         setTimeout(() => { checkImage() }, 500);
     }
 }
 
 // 四辺形の描画
 const drawRect = (location) => {
-    rectCvs.width = contentWidth;
-    rectCvs.height = contentHeight;
+    rectCvs.width = cvs.width;
+    rectCvs.height = cvs.height;
     drawLine(location.topLeftCorner, location.topRightCorner);
     drawLine(location.topRightCorner, location.bottomRightCorner);
     drawLine(location.bottomRightCorner, location.bottomLeftCorner);
@@ -102,33 +109,19 @@ let count = 0;
 function camera_change() {
     closeMenu();
     count++;
-    if (count % 2 == 0) {
-        navigator.mediaDevices.getUserMedia({ audio: false, video: { width: width, height: height } })
-            .then((stream) => {
-                video.srcObject = stream;
-                video.onloadeddata = () => {
-                    video.play();
-                    contentWidth = video.videoWidth;
-                    contentHeight = video.videoHeight;
-                    canvasUpdate();
-                    checkImage();
-                }
-            }).catch((e) => {
-                console.log(e);
-            });
-    } else {
-        navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: "environment" } })
-            .then((stream) => {
-                video.srcObject = stream;
-                video.onloadeddata = () => {
-                    video.play();
-                    contentWidth = video.videoWidth;
-                    contentHeight = video.videoHeight;
-                    canvasUpdate();
-                    checkImage();
-                }
-            }).catch((e) => {
-                console.log(e);
-            });
-    }
+    const constraints = count % 2 === 0 ? { audio: false, video: { width: width, height: height } } : { audio: false, video: { facingMode: "environment" } };
+    
+    navigator.mediaDevices.getUserMedia(constraints)
+        .then((stream) => {
+            video.srcObject = stream;
+            video.onloadeddata = () => {
+                video.play();
+                contentWidth = video.videoWidth;
+                contentHeight = video.videoHeight;
+                canvasUpdate();
+                checkImage();
+            }
+        }).catch((e) => {
+            console.log(e);
+        });
 }
