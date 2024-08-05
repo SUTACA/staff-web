@@ -1,9 +1,9 @@
 // メニューを閉じる(beforeをクリックした時)
 window.addEventListener('click', function (e) {
     var menuItems = document.getElementById('menuItems');
-    if (!e.target.closest('.menu-bar') && !e.target.closest('.menu-items') && menuItems.classList.contains('open')) {
-        menuItems.classList.remove('open');
-        document.getElementById('background1').style.display = 'none';
+    console.log(e.target)
+    if (!e.target.closest('.menu-bar') && e.target.closest('#background1')) {
+        closeMenu()
     }
 });
 

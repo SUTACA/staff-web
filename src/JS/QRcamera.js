@@ -29,13 +29,11 @@
    const cvs = document.getElementById('camera-canvas');
    const ctx = cvs.getContext('2d');
    const canvasUpdate = () => {
-       //縦横比を保ったままリサイズ 縦を画面いっぱいにする。
-       //横幅超えた分は中心にして表示　はみ出ない様にする
-       //16:9の比率の場合は、9:16にする
-         //キャンバスのサイズを画面サイズに合わせる
-         cvs.width = width;
-            cvs.height = height;
-
+       //縦横比を保ったままリサイズ
+       //縦を基準に横幅を計算（超えた分は中心にして表示）
+         cvs.height = height;
+            cvs.width = height * contentWidth / contentHeight;
+                
 
 
        //左右反転
@@ -44,11 +42,8 @@
            ctx.scale(-1, 1);
        }
 
-         //映像をキャンバスに描画
-
-            ctx.drawImage(video, 0, 0, contentWidth, contentHeight, 0, 0, width, height);
-         //次の描画をリクエスト
-
+       ctx.drawImage(video, 0, 0, cvs.width, cvs.height);
+       ctx.setTransform(1, 0, 0, 1, 0, 0);
        requestAnimationFrame(canvasUpdate);
    }
 

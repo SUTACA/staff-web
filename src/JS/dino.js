@@ -11,7 +11,7 @@ let obstacles = [];
 // キャンバスのサイズをビューポートのサイズに合わせる
 function resizeCanvas() {
     canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    canvas.height = window.innerHeight-100;
 }
 resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
