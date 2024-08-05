@@ -1,6 +1,6 @@
 <html>
 <body>
-
+    <div id="background1"></div>
     <div class="menu">
         <div class="menu-bar" onclick="toggleMenu()">
             <img src="./src/img/bar.png" alt="menu">
@@ -26,12 +26,21 @@
                 <li class="barmenu"><img src="./src/img/refresh.png"><p>データ更新（未実装）</p></li>
                 <li class="barmenu" onclick="logout()"><img src="./src/img/logout.png"><p>ログアウト</p></li>
                 
+                <h3>その他</h3>
+                <li class="barmenu" onclick="location.href='./qanda.html'"><img src="./src/img/volume.png"><p>運営用よくある質問</p></li>
+                <li class="barmenu" onclick="location.href='./dino.html'"><img src="./src/img/volume.png"><p>ミニゲーム</p></li>
                 <div class="version">v0.0.2</div>
-                <div class="user_hit">ユーザー照会</div>
+                <div class="logout"><img src="./src/img/logout.png">ログアウト</div>
                 
                 <!-- 必要なだけ項目を追加 -->
             </ul>
         </div>
+
+         <!-- メインに戻るボタン -->
+    <a href="index.html" class="back-to-main-button" id="backbutton">
+        <span class="button-icon">&#x21A9;</span>
+        <span class="button-text">戻る</span>
+    </a>
 </body>
 
 </html>

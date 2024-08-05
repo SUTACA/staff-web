@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <title>SUTACA -スタッフ認証システム-</title>
+    <link rel="stylesheet" href="./src/CSS/Common.css">
+    <link rel="stylesheet" href="./src/CSS/qanda.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+
+<body>
+    <div id="header"></div>
+
+    <div class="title">
+        <h1>Q&A</h1>
+    </div>
+    <div class="cp_qa">
+        <input id="cp_conttab1" type="radio" name="tabs" checked>
+        <label for="cp_conttab1" class="cp_tabitem"><b>全体</b></label>
+        <input id="cp_conttab2" type="radio" name="tabs">
+        <label for="cp_conttab2" class="cp_tabitem"><b>巡回/警備</b></label>
+        <input id="cp_conttab3" type="radio" name="tabs">
+        <label for="cp_conttab3" class="cp_tabitem"><b>展示/模擬</b></label>
+        <input id="cp_conttab4" type="radio" name="tabs">
+        <label for="cp_conttab4" class="cp_tabitem"><b>その他</b></label>
+
+        <div id="cp_content1">
+            <p>ジャンル1に関連する質問と回答</p>
+            <div class="cp_qain" id="category1"></div>
+        </div>
+        <div id="cp_content2">
+            <p>ジャンル2に関連する質問と回答</p>
+            <div class="cp_qain" id="category2"></div>
+        </div>
+        <div id="cp_content3">
+            <p>ジャンル3に関連する質問と回答</p>
+            <div class="cp_qain" id="category3"></div>
+        </div>
+        <div id="cp_content4">
+            <p>ジャンル4に関連する質問と回答</p>
+            <div class="cp_qain" id="category4"></div>
+        </div>
+    </div>
+
+
+
+    <script>
+
+        async function fetchData() {
+            const apiKey = 'YOUR_API_KEY'; // ここにAPIキーを設定
+            const url = `https://script.google.com/macros/s/AKfycbzuRX-iFgUNYRw5RTtpd2W3enzK7IyiTQ7Vgm5XIMfylW1GRHj4YS3IoGIKFbe8hLqHxA/exec?apiKey=${apiKey}`;
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                displayData(data);
+            } catch (error) {
+                console.error('Fetch error: ', error);
+            }
+        }
+
+        function displayData(data) {
+ 
+
+            // カテゴリごとのコンテンツをクリア
+            const categoryDivs = ['category1', 'category2', 'category3', 'category4'];
+            categoryDivs.forEach(id => {
+                const categoryDiv = document.getElementById(id);
+                categoryDiv.innerHTML = '';
+            });
+
+            // データを各カテゴリに追加
+            for (let i = 1; i < data.length; i++) {
+                const [category, question, answer, image] = data[i];
+                let categoryDivId;
+
+                switch (category) {
+                    case '全体':
+                        categoryDivId = 'category1';
+                        break;
+                    case '巡回/警備':
+                        categoryDivId = 'category2';
+                        break;
+                    case '展示/模擬':
+                        categoryDivId = 'category3';
+                        break;
+                    case 'その他':
+                        categoryDivId = 'category4';
+                        break;
+                    default:
+                        continue;
+                }
+
+                const categoryDiv = document.getElementById(categoryDivId);
+
+                const actabDiv = document.createElement('div');
+                actabDiv.classList.add('cp_actab');
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.id = `cp_tab${i}`;
+                checkbox.name = 'tabs';
+                actabDiv.appendChild(checkbox);
+
+                const plusDiv = document.createElement('div');
+                plusDiv.classList.add('cp_plus');
+                plusDiv.textContent = '+';
+                actabDiv.appendChild(plusDiv);
+
+                const label = document.createElement('label');
+                label.htmlFor = `cp_tab${i}`;
+                label.textContent = question;
+                actabDiv.appendChild(label);
+
+                const contentDiv = document.createElement('div');
+                contentDiv.classList.add('cp_actab-content');
+                contentDiv.textContent = answer;
+
+                if (image) {
+                    const img = document.createElement('img');
+                    img.src = image;
+                    img.alt = question;
+                    img.style.maxWidth = '100%'; // 画像の幅を調整
+                    contentDiv.appendChild(img);
+                }
+
+                actabDiv.appendChild(contentDiv);
+                categoryDiv.appendChild(actabDiv);
+            }
+        }
+        fetchData();
+    </script>
+</body>
+<script src="./src/JS/common.js"></script>
+<script src="./src/JS/header.js"></script>
+<script src="./src/JS/index.js"></script>
+</html>

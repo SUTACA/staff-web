@@ -99,13 +99,22 @@ a{
 .menu-items ul li:hover {
     background-color: #f5f5f5;
 }
-.user_hit{
+.logout{
     position: absolute;
     bottom: 0;
     width: 100%;
     padding: 20px 0;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
+}
+
+.logout img{
+    /*左寄せ*/
+    margin-right: auto;
+    width: 5vw;
+    position: absolute;
+    left: 60px;
+    top: 19px;
 }
 
 .version{
@@ -134,4 +143,38 @@ a{
     to{
         opacity: 1;
     }
+}
+
+
+.back-to-main-button {
+    z-index: 1000; /* ボタンを最前面に表示 */
+    position: fixed; /* 固定位置 */
+    bottom: 20px; /* 下からの距離 */
+    right: 20px; /* 右からの距離 */
+    width: 120px; /* ボタンの幅 */
+    height: 50px; /* ボタンの高さ */
+    background-color: #007bff; /* ボタンの背景色 */
+    color: white; /* ボタンの文字色 */
+    border-radius: 25px; /* ボタンを丸くする */
+    display: flex; /* フレックスボックスで配置 */
+    align-items: center; /* 垂直方向に中央に配置 */
+    justify-content: center; /* 水平方向に中央に配置 */
+    text-decoration: none; /* 下線を削除 */
+    font-size: 16px; /* テキストのサイズ */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* ボタンに影を追加 */
+    transition: background-color 0.3s, box-shadow 0.3s; /* ホバー時のトランジション */
+}
+
+.button-icon {
+    font-size: 20px; /* アイコンのサイズ */
+    margin-right: 8px; /* アイコンとテキストの間隔 */
+}
+
+.button-text {
+    display: inline-block; /* テキストをインラインブロックにする */
+}
+
+.back-to-main-button:hover {
+    background-color: #0056b3; /* ホバー時の背景色 */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* ホバー時の影 */
 }

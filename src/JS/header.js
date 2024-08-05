@@ -1,12 +1,12 @@
 // メニューを閉じる(beforeをクリックした時)
 window.addEventListener('click', function (e) {
     var menuItems = document.getElementById('menuItems');
-    console.log(e.target);
     if (!e.target.closest('.menu-bar') && !e.target.closest('.menu-items') && menuItems.classList.contains('open')) {
         menuItems.classList.remove('open');
         document.getElementById('background1').style.display = 'none';
     }
 });
+
 
 function closeMenu() {
     menuItems.classList.remove('open');
@@ -26,7 +26,7 @@ function logout() {
     location.href = './login.html';
 }
 
-function changeLocation(){
+function changeLocation() {
     closeMenu()
     Swal.fire({
         title: config.systemMessage.locationMessage1,
@@ -38,7 +38,7 @@ function changeLocation(){
         confirmButtonText: config.systemMessage.save,
         cancelButtonText: config.systemMessage.cancel,
         showLoaderOnConfirm: true,
-        inputPlaceholder: '現在: '+sessionData1.locationId,
+        inputPlaceholder: '現在: ' + sessionData1.locationId,
 
         preConfirm: (locationId) => {
             //16進数かどうかチェック
