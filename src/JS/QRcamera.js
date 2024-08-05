@@ -31,20 +31,23 @@
    const canvasUpdate = () => {
        //縦横比を保ったままリサイズ 縦を画面いっぱいにする。
        //横幅超えた分は中心にして表示　はみ出ない様にする
-         cvs.height = height;
-            cvs.width = width;
-            const scale = height / contentHeight;
-            const newWidth = contentWidth * scale;
-            const offsetX = (width - newWidth) / 2;
-          
+       //16:9の比率の場合は、9:16にする
+         //キャンバスのサイズを画面サイズに合わせる
+         cvs.width = width;
+            cvs.height = height;
+
+
+
        //左右反転
        if (count % 2 == 0) {
            ctx.translate(cvs.width, 0);
            ctx.scale(-1, 1);
        }
 
-       ctx.drawImage(video, 0, 0, contentWidth, contentHeight, offsetX, 0, newWidth, height);
+         //映像をキャンバスに描画
 
+            ctx.drawImage(video, 0, 0, contentWidth, contentHeight, 0, 0, width, height);
+         //次の描画をリクエスト
 
        requestAnimationFrame(canvasUpdate);
    }
