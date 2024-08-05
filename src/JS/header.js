@@ -1,10 +1,9 @@
-// メニューを閉じる(beforeをクリックした時)
+// メニューを閉じる(backgoround1をクリックした時)スマホ用
 window.addEventListener('click', function (e) {
-    var menuItems = document.getElementById('menuItems');
-    console.log(e.target)
-    if (!e.target.closest('.menu-bar') && e.target.closest('#background1')) {
-        closeMenu()
+    if (e.target.id == 'background1') {
+        closeMenu();
     }
+
 });
 
 

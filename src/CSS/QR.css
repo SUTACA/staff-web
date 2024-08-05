@@ -94,7 +94,3 @@
     display: none;
 }
 
-#video, #camera-canvas, #rect-canvas {
-    width: 100%;
-    max-width: 100%;
-}

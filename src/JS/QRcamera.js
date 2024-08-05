@@ -30,20 +30,20 @@
    const ctx = cvs.getContext('2d');
    const canvasUpdate = () => {
        //縦横比を保ったままリサイズ
-       //縦を基準に横幅を計算（超えた分は中心にして表示）
-         cvs.height = height;
-            cvs.width = height * contentWidth / contentHeight;
-                
+       cvs.height = height;
+       //横幅は超えない
+       cvs.width = contentWidth * height / contentHeight;
 
 
-       //左右反転
-       if (count % 2 == 0) {
-           ctx.translate(cvs.width, 0);
-           ctx.scale(-1, 1);
-       }
-
+        //左右反転
+        if (count % 2 == 0) {
+            ctx.translate(cvs.width, 0);
+            ctx.scale(-1, 1);
+        }
+        
        ctx.drawImage(video, 0, 0, cvs.width, cvs.height);
        ctx.setTransform(1, 0, 0, 1, 0, 0);
+
        requestAnimationFrame(canvasUpdate);
    }
 
@@ -62,15 +62,13 @@
            console.log("QRcodeが見つかりました", code);
            //scan.mp3を再生
            const audio = new Audio('./src/sound/scan.mp3');
-           //音量configから
-           audio.volume = config.volume==undefined?.5:config.volume/100;
            audio.play();
            drawRect(code.location);
            //QRコードの内容を取得
            const qrData = code.data;
            //QRコードの内容を表示
            document.getElementById('scan_message').innerText = qrData;
-
+           
 
            setTimeout(() => { checkImage() }, 2000);
        } else {
@@ -78,7 +76,7 @@
            rectCtx.clearRect(0, 0, contentWidth, contentHeight);
            setTimeout(() => { checkImage() }, 500);
        }
-
+      
    }
 
 
@@ -103,13 +101,10 @@
    }
 
    //カメラ切り替え
-   //自動で左右反転
    let count = 0;
    function camera_change() {
-       closeMenu();
        count++;
        if (count % 2 == 0) {
-
            const media = navigator.mediaDevices.getUserMedia({ audio: false, video: { width: width, height: height } })
                .then((stream) => {
                    video.srcObject = stream;
@@ -124,7 +119,7 @@
                    console.log(e);
                });
        } else {
-           const media = navigator.mediaDevices.getUserMedia({ audio: false, video: { width: width, height: height }  })
+           const media = navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: "environment" } })
                .then((stream) => {
                    video.srcObject = stream;
                    video.onloadeddata = () => {
@@ -133,7 +128,6 @@
                        contentHeight = video.clientHeight;
                        canvasUpdate(); // 次で記述
                        checkImage(); // 次で記述
-
                    }
                }).catch((e) => {
                    console.log(e);
