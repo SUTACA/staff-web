@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <title>SUTACA - 落とし物ページ -</title>
+    <link rel="stylesheet" href="./src/css/common.css">
+    <link rel="stylesheet" href="./src/css/lost.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+</head>
+
+<body>
+    <div id="header"></div>
+
+    <div class="title">
+        <h1>落とし物情報</h1>
+        <!--落とし物登録ボタン https://forms.gle/WWJpHXnvnrbDCUj98-->
+        <a href="https://forms.gle/WWJpHXnvnrbDCUj98" target="_blank" rel="noopener noreferrer" class="lost-button">落とし物を登録する</a>
+
+    </div>
+    <div class="cp_qa">
+        <input id="cp_conttab1" type="radio" name="tabs" checked>
+        <label for="cp_conttab1" class="cp_tabitem"><b>電子機器</b></label>
+        <input id="cp_conttab2" type="radio" name="tabs">
+        <label for="cp_conttab2" class="cp_tabitem"><b>貴重品</b></label>
+        <input id="cp_conttab3" type="radio" name="tabs">
+        <label for="cp_conttab3" class="cp_tabitem"><b>衣類装飾</b></label>
+        <input id="cp_conttab4" type="radio" name="tabs">
+        <label for="cp_conttab4" class="cp_tabitem"><b>その他</b></label>
+
+        <div id="cp_content1" class="cp_content active">
+            <p>電子機械・携帯電話類に関する落とし物</p>
+            <div class="cp_images" id="category1"></div>
+        </div>
+        <div id="cp_content2" class="cp_content">
+            <p>貴重品に関する落とし物</p>
+            <div class="cp_images" id="category2"></div>
+        </div>
+        <div id="cp_content3" class="cp_content">
+            <p>衣類に関する落とし物</p>
+            <div class="cp_images" id="category3"></div>
+        </div>
+        <div id="cp_content4" class="cp_content">
+            <p>その他の落とし物</p>
+            <div class="cp_images" id="category4"></div>
+        </div>
+    </div>
+
+    <!-- 詳細情報を表示するためのモーダル -->
+    <div id="details" class="details">
+        <span class="close" onclick="closeDetails()">×</span>
+        <img id="detailsImage" src="" alt="" style="max-width: 100%; height: auto;">
+        <p id="detailsText"></p>
+    </div>
+
+    <script>
+        async function fetchData() {
+            const apiKey = 'YOUR_API_KEY2'; // ここにAPIキーを設定
+            const url = `https://script.google.com/macros/s/AKfycbzuRX-iFgUNYRw5RTtpd2W3enzK7IyiTQ7Vgm5XIMfylW1GRHj4YS3IoGIKFbe8hLqHxA/exec?apiKey=${apiKey}`;
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                displayData(data);
+            } catch (error) {
+                console.error('Fetch error: ', error);
+            }
+        }
+
+        function displayData(data) {
+    // カテゴリごとのコンテンツをクリア
+    const categoryDivs = ['category1', 'category2', 'category3', 'category4'];
+    categoryDivs.forEach(id => {
+        const categoryDiv = document.getElementById(id);
+        categoryDiv.innerHTML = '';
+    });
+
+    // データを各カテゴリに追加
+    const images = [];
+    for (let i = 1; i < data.length; i++) {
+        const [received, timestamp, email, finderName, broadLocation, specificLocation, category, itemName, imageUrl] = data[i];
+
+        let categoryDivId;
+        switch (category) {
+            case '電子機械・携帯電話類':
+                categoryDivId = 'category1';
+                break;
+            case '貴重品':
+                categoryDivId = 'category2';
+                break;
+            case '衣類・装飾品':
+                categoryDivId = 'category3';
+                break;
+            case 'その他':
+                categoryDivId = 'category4';
+                break;
+            default:
+                continue; // カテゴリが無効な場合はスキップ
+        }
+
+        const fileId = imageUrl.split("id=")[1].split("&")[0];
+        const imageSrc = `https://lh3.googleusercontent.com/d/${fileId}`;
+
+        const img = document.createElement('img');
+        img.src = imageSrc;
+        img.alt = itemName;
+        img.dataset.itemName = itemName;
+        img.dataset.timestamp = timestamp;
+        img.dataset.finderName = finderName;
+        img.dataset.broadLocation = broadLocation;
+        img.dataset.specificLocation = specificLocation;
+        img.addEventListener('click', showDetails);
+        img.onerror = function() {
+            console.error('Image failed to load:', imageSrc);
+        };
+
+        const imageContainer = document.createElement('div');
+        imageContainer.classList.add('image-container');
+
+        if (received) {
+            img.classList.add('gray-out');
+            const overlay = document.createElement('div');
+            overlay.classList.add('status-overlay');
+            overlay.textContent = '受け渡し済み';
+            imageContainer.appendChild(overlay);
+        }
+
+        const name = document.createElement('div');
+        name.classList.add('image-name');
+        name.textContent = itemName;
+
+        imageContainer.appendChild(img);
+        imageContainer.appendChild(name);
+
+        const categoryDiv = document.getElementById(categoryDivId);
+        images.push({ container: imageContainer, received, categoryDiv });
+    }
+
+    // 受け渡し済みの画像を最後に移動
+    images.sort((a, b) => a.received - b.received);
+
+    images.forEach(({ container, categoryDiv }) => {
+        categoryDiv.appendChild(container);
+    });
+}
+
+
+
+        function showDetails(event) {
+            const img = event.target;
+            const details = document.getElementById('details');
+            const detailsImage = document.getElementById('detailsImage');
+            const detailsText = document.getElementById('detailsText');
+            const time = new Intl.DateTimeFormat('ja-JP', { month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'Asia/Tokyo' }).format(new Date(img.dataset.timestamp));
+
+            detailsImage.src = img.src;
+            detailsText.innerHTML = `
+                <strong>品名:</strong> ${img.dataset.itemName}<br>
+                <strong>発見日時:</strong> ${time}<br>
+                <strong>発見者:</strong> ${img.dataset.finderName}<br>
+                <strong>発見場所:</strong> ${img.dataset.broadLocation}<br>
+                <strong>詳細場所:</strong> ${img.dataset.specificLocation}
+            `;
+
+            details.classList.add('active');
+        }
+
+        function closeDetails() {
+            const details = document.getElementById('details');
+            details.classList.remove('active');
+        }
+
+        // タブの切り替え処理
+        document.querySelectorAll('.cp_tabitem').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const id = tab.htmlFor.replace('cp_conttab', 'cp_content');
+                document.querySelectorAll('.cp_content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                document.getElementById(id).classList.add('active');
+            });
+        });
+
+        fetchData();
+    </script>
+</body>
+<script src="./src/JS/common.js"></script>
+<script src="./src/JS/header.js"></script>
+<script src="./src/JS/index.js"></script>
+</html>

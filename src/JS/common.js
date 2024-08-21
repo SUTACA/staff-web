@@ -56,7 +56,7 @@ if (location.pathname != '/login.html') {
         sessionStorage.setItem('sessionData', JSON.stringify(sessionData));
         }
         //メインコンテンツの表示
-        if(location.pathname != '/index.html' && location.pathname != '/dino.html' && location.pathname != '/qanda.html'){
+        if(location.pathname != '/index.html' && location.pathname != '/dino.html' && location.pathname != '/qanda.html' &&location.pathname != '/lost.html'){
             location.href = './index.html';
         }
     } else {
