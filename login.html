@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="./src/css/login.css">　
     <link rel="stylesheet" href="./src/css/common.css">
     <script src="./src/JS/common.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="489899622086-5akj3ltf09q1nkmpopfu6tv7d1409ngv.apps.googleusercontent.com">
 </head>
 
 <body>
@@ -20,31 +22,30 @@
         <div class="title-discription">
             許可されたoecuアカウントのみログイン可能です
         </div>
-        <div class="title-message error" id="title-message">
-        </div>
+        <div class="title-message error" id="title-message"></div>
     </div>
-    <div class="login">
 
-        <!--Googleログイン-->
+    <div class="login">
+        <!-- Googleログイン -->
+        <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
         <div class="btn btn-google" id="btn-google">
             <img src="./src/img/google_icom.webp" alt="Google">
             <div class="btn-text">Google</div>
         </div>
         or
-        <!--パスワード認証-->
+
+        <!-- パスワード認証 -->
         <div class="btn btn-pass">
             <input type="text" name="user_id" placeholder="パスワード認証">
         </div>
         <div class="btn btn-pass-login" id="btn-pass-login" onclick="login()">ログイン</div>
-
     </div>
 
-
-    <!--自動入力（config.json）-->
+    <!-- 自動入力（config.json）-->
     <p>ログインできない場合は<a class="tel">（自動入力）</a>まで</p>
     <p class="version">v0.0.2</p>
 
+    <script src="./src/JS/login.js"></script>
 </body>
-<script src="./src/JS/login.js"></script>
 
 </html>

@@ -41,22 +41,23 @@ var sessionData = {
     "locationId": "",//スキャンポイント
 };
 //login.html以外だったら実行
-if (location.pathname != '/login.html') {
+if (!location.pathname.endsWith('/login.html')) {
     //セッションデータの取得
     if (sessionStorage.getItem('sessionData')) {
-        sessionData = JSON.parse(sessionStorage.getItem('sessionData'));
+        let sessionData = JSON.parse(sessionStorage.getItem('sessionData'));
         //セッションの有効期限が切れている場合
         if (sessionData.sessionExpire <= new Date().getTime()) {
             sessionStorage.removeItem('sessionData');
             location.href = './login.html?error=2';
-        }else{
-        //セッションの有効期限を更新
-        sessionData.sessionExpire = (new Date().getTime()+JSON.parse(sessionStorage.getItem('config')).loginSessionTime*60000);
-        sessionData.sessionExpire2 = new Date(sessionData.sessionExpire).toLocaleString();
-        sessionStorage.setItem('sessionData', JSON.stringify(sessionData));
+        } else {
+            //セッションの有効期限を更新
+            sessionData.sessionExpire = new Date().getTime() + JSON.parse(sessionStorage.getItem('config')).loginSessionTime * 60000;
+            sessionData.sessionExpire2 = new Date(sessionData.sessionExpire).toLocaleString();
+            sessionStorage.setItem('sessionData', JSON.stringify(sessionData));
         }
         //メインコンテンツの表示
-        if(location.pathname != '/index.html' && location.pathname != '/dino.html' && location.pathname != '/qanda.html' &&location.pathname != '/lost.html'){
+        const validPages = ['/index.html', '/dino.html', '/qanda.html', '/lost.html'];
+        if (!validPages.some(page => location.pathname.endsWith(page))) {
             location.href = './index.html';
         }
     } else {
