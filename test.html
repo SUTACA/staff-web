@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id"
+        content="489899622086-7a786p4a372k7avo62p2sjjeji8jpkl1.apps.googleusercontent.com">
+    <title>Google OAuthログイン</title>
+</head>
+
+<body>
+    <h1>Googleログイン</h1>
+
+    <!-- Google OAuth認証へのリンク -->
+    <a id="login-link" href="#">Googleでログイン</a>
+
+    <script>
+        document.getElementById('login-link').addEventListener('click', function () {
+            // OAuth認証のURLを構成
+            const clientId = '489899622086-7a786p4a372k7avo62p2sjjeji8jpkl1.apps.googleusercontent.com'; // クライアントID
+            const redirectUri = 'http://localhost:8080/login'; // リダイレクトURI
+            const scope = 'profile email'; // 要求するスコープ
+            const authUrl = `https://accounts.google.com/o/oauth2/auth?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&access_type=offline&approval_prompt=force`;
+
+            // 認証URLへリダイレクト
+            window.location.href = authUrl;
+        });
+
+// テスト用の固定値
+const Email = 'gp23a179@oecu.jp';
+const UserAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36';
+const IpAddress = '192.168.1.1'; // 固定IPアドレス
+const apiKey = 'YOUR_API_KEY3'; // ここにAPIキーを設定
+const url = `https://script.google.com/macros/s/AKfycbzuRX-iFgUNYRw5RTtpd2W3enzK7IyiTQ7Vgm5XIMfylW1GRHj4YS3IoGIKFbe8hLqHxA/exec?apiKey=${apiKey}`;
+
+async function test() {
+    try {
+        // テスト用データを使ってリクエストを送信
+        const response = await fetch(`${url}&email=${encodeURIComponent(Email)}&userAgent=${encodeURIComponent(UserAgent)}&ipAddress=${encodeURIComponent(IpAddress)}`);
+        
+        // レスポンスが正常かどうか確認
+        if (!response.ok) {
+            throw new Error(`HTTPエラー ${response.status}`);
+        }
+
+        const result = await response.text();
+        console.log(result);
+    } catch (error) {
+        console.log(`エラー: ${error.message}`);
+    }
+}
+
+// test関数を呼び出す（必要に応じて）
+test();
+
+
+    </script>
+</body>
+
+</html>

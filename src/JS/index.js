@@ -7,6 +7,7 @@ function load() {
         document.querySelector('#data_date').innerHTML = new Date(sessionData1.loginTime).toLocaleString();
         document.querySelector('#location_id').innerHTML = sessionData1.locationId;
         permission = permission_table_create(sessionData1.locationId)
+        checkRole();
     }, 2000);
 }
 

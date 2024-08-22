@@ -85,3 +85,13 @@ function changeVolume() {
         allowOutsideClick: () => !Swal.isLoading()
     });
 }
+
+//権限がadminだったらアイコンの縁を赤くする
+function checkRole() {
+    if (sessionData1.userRole == 'admin') {
+        document.getElementById('userIcon').style.border = 'solid 2px red';
+    }
+    if (sessionData1.userRole == 'leader') {
+        document.getElementById('userIcon').style.border = 'solid 2px blue';
+    }
+}

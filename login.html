@@ -11,10 +11,74 @@
     <link rel="stylesheet" href="./src/css/common.css">
     <script src="./src/JS/common.js"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <meta name="google-signin-client_id" content="489899622086-5akj3ltf09q1nkmpopfu6tv7d1409ngv.apps.googleusercontent.com">
 </head>
 
 <body>
+    <div id="loading-overlay" class="loading-overlay" style="display: none;">
+        <div class="loading-spinner"></div>
+    </div>
+    <script>
+        // URLから認証コードを取得
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+
+        if (code) {
+            // 読み込みアニメーションを表示
+            document.getElementById('loading-overlay').style.display = 'flex';
+
+            const clientId = '489899622086-7a786p4a372k7avo62p2sjjeji8jpkl1.apps.googleusercontent.com'; // クライアントID
+            const redirectUri = 'http://localhost:8080/login.html'; // リダイレクトURI
+            const tokenUrl = 'https://oauth2.googleapis.com/token';
+
+            // アクセストークンを取得
+            fetch(tokenUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    code: code,
+                    client_id: clientId,
+                    client_secret: clientSecret,
+                    redirect_uri: redirectUri,
+                    grant_type: 'authorization_code',
+                }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const accessToken = data.access_token;
+                    console.log("アクセストークン:", accessToken);
+
+                    // アクセストークンを使用してユーザー情報を取得
+                    fetch('https://www.googleapis.com/oauth2/v1/userinfo?alt=json', {
+                        headers: {
+                            'Authorization': `Bearer ${accessToken}`
+                        }
+                    })
+                        .then(response => response.json())
+                        .then(userData => {
+                            console.log("ユーザー情報:", userData);
+                            login_check(userData.email, userData.name, userData.picture);
+                        })
+                        .catch(error => {
+                            console.error('Error fetching user info:', error);
+                            console.log("ユーザー情報の取得に失敗しました。");
+
+                            // エラー発生時もアニメーションを非表示にする
+                            document.getElementById('loading-overlay').style.display = 'none';
+                        });
+                })
+                .catch(error => {
+                    console.error('Error fetching access token:', error);
+                    console.log("アクセストークンの取得に失敗しました。");
+
+                    // エラー発生時もアニメーションを非表示にする
+                    document.getElementById('loading-overlay').style.display = 'none';
+                });
+        } else {
+            console.log("認証コードが見つかりません。");
+        }
+    </script>
     <img id="logo" src="./src/sutaca/textlogo/sutaca_textlogo2_transparent.png" alt="SUTACA">
 
     <div class="title">
@@ -27,8 +91,7 @@
 
     <div class="login">
         <!-- Googleログイン -->
-        <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
-        <div class="btn btn-google" id="btn-google">
+        <div class="btn btn-google" id="btn-google" onclick="googlelogin()">
             <img src="./src/img/google_icom.webp" alt="Google">
             <div class="btn-text">Google</div>
         </div>
@@ -38,7 +101,7 @@
         <div class="btn btn-pass">
             <input type="text" name="user_id" placeholder="パスワード認証">
         </div>
-        <div class="btn btn-pass-login" id="btn-pass-login" onclick="login()">ログイン</div>
+        <div class="btn btn-pass-login" id="btn-pass-login" onclick="login_test()">ログイン</div>
     </div>
 
     <!-- 自動入力（config.json）-->
@@ -47,5 +110,16 @@
 
     <script src="./src/JS/login.js"></script>
 </body>
+<script>
+    function googlelogin() {
+        // OAuth認証のURLを構成
+        const clientId = '489899622086-7a786p4a372k7avo62p2sjjeji8jpkl1.apps.googleusercontent.com'; // クライアントID
+        const redirectUri = 'http://localhost:8080/login.html'; // リダイレクトURI
+        const scope = 'profile email'; // 要求するスコープ
+        const authUrl = `https://accounts.google.com/o/oauth2/auth?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&access_type=offline&approval_prompt=force`;
+        // 認証URLへリダイレクト
+        window.location.href = authUrl;
+    }
+</script>
 
 </html>
