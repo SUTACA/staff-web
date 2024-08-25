@@ -7,7 +7,7 @@
     <title>ログインページ</title>
 
     <link rel="icon" href="./src/sutaca/icom/sutaca_icom1.png">
-    <link rel="stylesheet" href="./src/css/login.css">　
+    <link rel="stylesheet" href="./src/css/login.css">
     <link rel="stylesheet" href="./src/css/common.css">
     <script src="./src/JS/common.js"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
@@ -21,13 +21,14 @@
         // URLから認証コードを取得
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get('code');
+        const ramen = "-Xw5ksrBgUkXw0bDJe9EiJQI9HNaV"
 
         if (code) {
             // 読み込みアニメーションを表示
             document.getElementById('loading-overlay').style.display = 'flex';
 
             const clientId = '489899622086-7a786p4a372k7avo62p2sjjeji8jpkl1.apps.googleusercontent.com'; // クライアントID
-            const clientSecret=''
+            const clientSecret='GOCSPX'+ramen
             const redirectUri = 'http://localhost:8080/login.html'; // リダイレクトURI
             const tokenUrl = 'https://oauth2.googleapis.com/token';
 
