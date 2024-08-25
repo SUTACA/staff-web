@@ -29,7 +29,9 @@
 
             const clientId = '489899622086-7a786p4a372k7avo62p2sjjeji8jpkl1.apps.googleusercontent.com'; // クライアントID
             const clientSecret='GOCSPX'+ramen
-            const redirectUri = 'http://localhost:8080/login.html'; // リダイレクトURI
+            //今のアドレスを取得
+            const currentUrl = window.location.href;
+            const redirectUri = currentUrl; // リダイレクトURI
             const tokenUrl = 'https://oauth2.googleapis.com/token';
 
             // アクセストークンを取得
