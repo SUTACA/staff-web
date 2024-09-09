@@ -3,10 +3,10 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" href="./src/sutaca/icom/sutaca_icom1.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ログインページ</title>
 
-    <link rel="icon" href="./src/sutaca/icom/sutaca_icom1.png">
     <link rel="stylesheet" href="./src/css/login.css">
     <link rel="stylesheet" href="./src/css/common.css">
     <script src="./src/JS/common.js"></script>
@@ -28,7 +28,7 @@
             document.getElementById('loading-overlay').style.display = 'flex';
 
             const clientId = '489899622086-7a786p4a372k7avo62p2sjjeji8jpkl1.apps.googleusercontent.com'; // クライアントID
-            const clientSecret='GOCSPX'+ramen
+            const clientSecret = 'GOCSPX' + ramen
             //今のアドレスを取得
             const currentUrl = "https://sutaca-test.oecuevent.group/login.html";
             const redirectUri = currentUrl; // リダイレクトURI
@@ -118,7 +118,7 @@
     function googlelogin() {
         // OAuth認証のURLを構成
         const clientId = '489899622086-7a786p4a372k7avo62p2sjjeji8jpkl1.apps.googleusercontent.com'; // クライアントID
-        const redirectUri = 'http://localhost:8080/login.html'; // リダイレクトURI
+        const redirectUri = window.location.href; // リダイレクトURI        
         const scope = 'profile email'; // 要求するスコープ
         const authUrl = `https://accounts.google.com/o/oauth2/auth?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&access_type=offline&approval_prompt=force`;
         // 認証URLへリダイレクト
