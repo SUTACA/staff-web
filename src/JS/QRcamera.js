@@ -59,6 +59,7 @@
 
        // 検出結果に合わせて処理を実施
        if (code) {
+        
            console.log("QRcodeが見つかりました", code);
            //scan.mp3を再生
            const audio = new Audio('./src/sound/scan.mp3');
@@ -68,6 +69,7 @@
            const qrData = code.data;
            //QRコードの内容を表示
            document.getElementById('scan_message').innerText = qrData;
+           check_gate(code.data);
            
 
            setTimeout(() => { checkImage() }, 2000);
@@ -134,3 +136,46 @@
                });
        }
    };
+
+
+   function check_gate(data) {
+    const prefix = data.split('-')[0]; // SA
+    // permissionオブジェクトのprefixプロパティの値を取得
+    if (permission.hasOwnProperty(prefix)) {
+        console.log(permission[prefix]);
+        if(permission[prefix] === true){
+            console.log('Permission granted');
+            //scan.mp3を再生
+            const audio = new Audio('./src/sound/success.mp3');
+            audio.play();
+
+            /*履歴を追加*/
+            const apiKey = 'YOUR_API_KEY4'; 
+            const url =`https://script.google.com/macros/s/AKfycbzuRX-iFgUNYRw5RTtpd2W3enzK7IyiTQ7Vgm5XIMfylW1GRHj4YS3IoGIKFbe8hLqHxA/exec?apiKey=${apiKey}&email=${encodeURIComponent(sessionData1.userId)}&userId=${encodeURIComponent(data)}&locationId=${encodeURIComponent(sessionData1.locationId)}`
+        
+            try {
+                const response =  fetch(url);
+
+                if (!response.ok) {
+                    throw new Error(`HTTPエラー ${response.status}`);
+                }
+
+                
+        
+
+            } catch (error) {
+                console.log(`エラー: ${error.message}`);
+            }
+
+
+        }else{
+            console.log('Permission denied');
+            //scan.mp3を再生
+            const audio = new Audio('./src/sound/fail.mp3');
+            audio.play();
+        }
+    } else {
+        console.log('Permission not found');
+    }
+}
+

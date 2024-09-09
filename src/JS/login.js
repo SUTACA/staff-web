@@ -65,28 +65,29 @@ document.querySelector('.tel').href = 'tel:' + config.organization.tel;
 document.querySelector('.tel').textContent = config.organization.shortName;
 
 async function login_check(email, name, picture) {
-    // ユーザーエージェントを取得
-    const UserAgent = window.navigator.userAgent;
-    // IPアドレスを取得
+    const userAgent = window.navigator.userAgent;
 
-    const IpAddress =await fetch('https://api.ipify.org?format=json').then(response => response.json()).then(data => data.ip);
-    const apiKey = 'YOUR_API_KEY3'; // ここにAPIキーを設定
-    const url = `https://script.google.com/macros/s/AKfycbzuRX-iFgUNYRw5RTtpd2W3enzK7IyiTQ7Vgm5XIMfylW1GRHj4YS3IoGIKFbe8hLqHxA/exec?apiKey=${apiKey}&email=${encodeURIComponent(email)}&userAgent=${encodeURIComponent(UserAgent)}&ipAddress=${encodeURIComponent(IpAddress)}`;
+    const ipAddress = await fetch('https://api.ipify.org?format=json')
+        .then(response => response.json())
+        .then(data => data.ip);
+
+    const apiKey = 'YOUR_API_KEY3'; 
+    const url = `https://script.google.com/macros/s/AKfycbzuRX-iFgUNYRw5RTtpd2W3enzK7IyiTQ7Vgm5XIMfylW1GRHj4YS3IoGIKFbe8hLqHxA/exec?apiKey=${apiKey}&email=${encodeURIComponent(email)}&userAgent=${encodeURIComponent(userAgent)}&ipAddress=${encodeURIComponent(ipAddress)}`;
 
     try {
         const response = await fetch(url);
 
-        // レスポンスが正常かどうか確認
         if (!response.ok) {
             throw new Error(`HTTPエラー ${response.status}`);
         }
 
-        const result = await response.text();
-        console.log(result);
-        // 含まれていたら
-        if (result.includes('Granted')) {
+        const result = await response.json();
+        console.log(result[0]);
+
+        if (result[0].status === 'Access Granted') {
             console.log('ログイン成功');
-            login(email, name, picture,result);
+            login(email, name, picture, result);
+            console.table(result);
         } else {
             console.log('ログイン失敗');
             location.href = './login.html?error=1';
@@ -96,15 +97,19 @@ async function login_check(email, name, picture) {
     }
 }
 
+
 function login(email, name, picture,result) {
+    
     //resultには権限が含まれている
     // 権限情報オブジェクト　admin:"管理者",leader:"リーダー",user:"通常権限"
     var role = 'user';
-    if(result.includes('管理者')){
+    if(result[0].permission.includes('管理者')){
         var role = 'admin';
-    }else if(result.includes('リーダー')){
+    }else if(result[0].permission.includes('リーダー')){
         var role = 'leader';
     }
+    //result[0]は消す
+    result.shift();
 
     var sessionData = {
         loginFlg: true,
@@ -115,7 +120,8 @@ function login(email, name, picture,result) {
         loginTime2: new Date().toLocaleString(),
         sessionExpire: new Date().getTime() + config.loginSessionTime * 60000,
         sessionExpire2: new Date().toLocaleString(),
-        userIcon: picture
+        userIcon: picture,
+        data: result
     };
 
     sessionStorage.setItem('sessionData', JSON.stringify(sessionData));

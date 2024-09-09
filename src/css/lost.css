@@ -46,7 +46,6 @@ h1{
 }
 
 .cp_qa label.cp_tabitem:before {
-    content: '\f015'; /* FontAwesome のアイコンの Unicode コード (例: fa-home) */
     font-family: 'FontAwesome', sans-serif;
     display: inline-block;
     font-size: 24px; /* アイコンのサイズ */
@@ -55,6 +54,19 @@ h1{
     left: 50%; /* アイコンの左端を中央に設定 */
     top: 50%; /* アイコンの上端を中央に設定 */
     transform: translate(-50%, -50%); /* アイコンの中央を中央に設定 */
+}
+
+.cp_qa label.cp_tabitem[for*='1']:before {
+    content: '\f0e7'; /* FontAwesome のホームアイコンの Unicode コード */
+}
+.cp_qa label.cp_tabitem[for*='2']:before {/* FontAwesome の財布アイコンの Unicode コード */
+    content: '\f0d6';
+}
+.cp_qa label.cp_tabitem[for*='3']:before { /* FontAwesome の服アイコンの Unicode コード */
+    content: '\f1b0';
+}
+.cp_qa label.cp_tabitem[for*='4']:before { /* FontAwesome のその他アイコンの Unicode コード */
+    content: '\f0c0';
 }
 
 /* 中央揃え */
