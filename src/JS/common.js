@@ -20,8 +20,6 @@ fetch('./src/config.json')
         document.querySelector('.version').textContent = 'v' + data.version;
     });
 
-
-
 //セッションデータ 初期値
 var sessionData = {
     "userId": "",//ログインユーザーID

@@ -2,6 +2,8 @@
    //document.addEventListener('touchmove', function (e) { e.preventDefault(); }, { passive: false });
    //document.addEventListener('mousewheel', function (e) { e.preventDefault(); }, { passive: false });
 
+const { sweetAlert, Swal } = require("./common");
+
    // Webカメラの起動
    const video = document.getElementById('video');
    let contentWidth;
@@ -155,24 +157,41 @@
         
             try {
                 const response =  fetch(url);
-
                 if (!response.ok) {
                     throw new Error(`HTTPエラー ${response.status}`);
                 }
-
-                
-        
-
             } catch (error) {
                 console.log(`エラー: ${error.message}`);
             }
-
-
+            //成功 
+            //sessionstorage.data のからdata検索して団体名＋名前を表示
+            //[['AA-24-001'	'玉田 丈翔'	'-'	'大学祭実行委員会'	'-'	'運営（大祭）'	'運営'	'委員長'"],....]
+            const data2 = sessionData1.data;
+            let name = '';
+            let organization = '';
+            for (let i = 0; i < data2.length; i++) {
+                if (data2[i][0] == data) {
+                    name = data2[i][1];
+                    organization = data2[i][3];
+                    break;
+                }
+            }
+            //sweetAlert('success', '許可', organization + ' ' + name);
+            Swal.fire({
+                title: organization + ' ' + name,
+                icon: 'success'
+            });
         }else{
             console.log('Permission denied');
             //scan.mp3を再生
             const audio = new Audio('./src/sound/fail.mp3');
             audio.play();
+
+            //失敗
+            Swal.fire({
+                title: '許可されていません',
+                icon: 'error'
+            });
         }
     } else {
         console.log('Permission not found');
