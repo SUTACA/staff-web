@@ -3,13 +3,13 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" href="./src/sutaca/icom/sutaca_icom1.png">
+    <link rel="icon" href="https://aquarabbit62.sakura.ne.jp/sutaca-test/src/sutaca/icom/sutaca_icom1.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ログインページ</title>
 
-    <link rel="stylesheet" href="./src/css/login.css">
-    <link rel="stylesheet" href="./src/css/common.css">
-    <script src="./src/JS/common.js"></script>
+    <link rel="stylesheet" href="https://aquarabbit62.sakura.ne.jp/sutaca-test/src/css/login.css">
+    <link rel="stylesheet" href="https://aquarabbit62.sakura.ne.jp/sutaca-test/src/css/common.css">
+    <script src="https://aquarabbit62.sakura.ne.jp/sutaca-test/src/JS/common.js"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 
@@ -83,7 +83,7 @@
             console.log("認証コードが見つかりません。");
         }
     </script>
-    <img id="logo" src="./src/sutaca/textlogo/sutaca_textlogo2_transparent.png" alt="SUTACA">
+    <img id="logo" src="https://aquarabbit62.sakura.ne.jp/sutaca-test/src/sutaca/textlogo/sutaca_textlogo2_transparent.png" alt="SUTACA">
 
     <div class="title">
         <h2>ユーザーログイン</h2>
@@ -96,14 +96,14 @@
     <div class="login">
         <!-- Googleログイン -->
         <div class="btn btn-google" id="btn-google" onclick="googlelogin()">
-            <img src="./src/img/google_icom.webp" alt="Google">
+            <img src="https://aquarabbit62.sakura.ne.jp/sutaca-test/src/img/google_icom.webp" alt="Google">
             <div class="btn-text">Google</div>
         </div>
         or
 
         <!-- パスワード認証 -->
         <div class="btn btn-pass">
-            <input type="text" name="user_id" placeholder="パスワード認証">
+            <input type="text" id="pass" name="user_id" placeholder="パスワード認証">
         </div>
         <div class="btn btn-pass-login" id="btn-pass-login" onclick="login_test()">ログイン</div>
     </div>
@@ -112,9 +112,17 @@
     <p>ログインできない場合は<a class="tel">（自動入力）</a>まで</p>
     <p class="version">v0.0.2</p>
 
-    <script src="./src/JS/login.js"></script>
+
+    <div id="top-left" class="corner" onclick="tapCorner('top-left')"></div>
+    <div id="top-right" class="corner" onclick="tapCorner('top-right')"></div>
+    <div id="bottom-left" class="corner" onclick="tapCorner('bottom-left')"></div>
+    <div id="bottom-right" class="corner" onclick="tapCorner('bottom-right')"></div>
+
+    
+    <script src="https://aquarabbit62.sakura.ne.jp/sutaca-test/src/JS/login.js"></script>
 </body>
 <script>
+    let debug =[]
     function googlelogin() {
         // OAuth認証のURLを構成
         const clientId = '489899622086-7a786p4a372k7avo62p2sjjeji8jpkl1.apps.googleusercontent.com'; // クライアントID
@@ -126,4 +134,7 @@
     }
 </script>
 
+<style>
+
+</style>
 </html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="https://aquarabbit62.sakura.ne.jp/sutaca-test/src/sutaca/icom/sutaca_icom1.png">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <title>SUTACA - ショートカット -</title>
+    <link rel="stylesheet" href="https://aquarabbit62.sakura.ne.jp/sutaca-test/src/css/common.css">
+    <link rel="stylesheet" href="https://aquarabbit62.sakura.ne.jp/sutaca-test/src/css/short.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+
+<body>
+    <div id="header"></div>
+
+    <div class="title">
+        <h1>リンクまとめ</h1>
+    </div>
+    <!--アイコンを並べてタップしたら新しいタブを開く-->
+    <!--四角角丸 追加しても綺麗に表示されるように-->
+    <!--アイコンの下に説明文章-->
+
+    <div class="section">
+        資料関係
+    </div>
+
+    <div class="icon">
+        <!--来場者用マップ-->
+        <div class="box">
+            <a href="https://aquarabbit62.sakura.ne.jp/sutaca-test/src/shorturl/lost.html" target="_blank"
+                rel="noopener noreferrer"><i class="fas fa-search"></i></a>
+            来場者用マップ
+        </div>
+        <!--スタッフ用マップ-->
+        <div class="box">
+            <a href="https://aquarabbit62.sakura.ne.jp/sutaca-test/src/shorturl/qanda.html" target="_blank"
+                rel="noopener noreferrer"><i class="fas fa-question"></i></a>
+            スタッフ用マップ
+        </div>
+        <!--配布物-->
+        <div class="box">
+            <a href="https://aquarabbit62.sakura.ne.jp/sutaca-test/src/shorturl/dino.html" target="_blank"
+                rel="noopener noreferrer"><i class="fas fa-dragon"></i></a>
+            パンフレットなど
+        </div>
+    </div>
+
+    <div class="section">
+        キャッシュレス関係
+    </div>
+    <div class="icon">
+        <!--paypay-->
+        <div class="box">
+            <a href="https://www.paypay.ne.jp/portal/oauth2/sign-in?client_id=pay2-merchant-panel-client" target="_blank"
+                rel="noopener noreferrer"><img src="https://play-lh.googleusercontent.com/AieC1ypSSh_2rctvrNtVggyFRP9cNtvnEIPkVmzZGFlhN8bNdHCl3GZbxK7O8vCe7A"
+                    alt="paypay"></a>
+        </div>
+        <!--d払い-->
+        <div class="box">
+            <a href="https://pay.veritrans.co.jp/maps/mall/" target="_blank"
+                rel="noopener noreferrer"><img src="https://play-lh.googleusercontent.com/wjJtDqBBuFNWOwTzpEQSYIeJQ_ENr5Iuoe7DskzVO7lV2VjBZiQtN9p_Jy_K6x0o3tA"
+                    alt="d払い"></a>
+        </div>
+            <!--auPAY-->
+            <div class="box">
+                <a href="https://www.aupaystore.kddi.com/" target="_blank"
+                    rel="noopener noreferrer"><img src="https://aupay.wallet.auone.jp/_nuxt/icon_aupay.1a4f5c6d.png"
+                        alt="auPAY"></a>
+            </div>
+    </div>
+            <style>
+                .icon {
+                    display: flex;
+                    justify-content: space-around;
+                    margin-top: 20px;
+                }
+
+                .icon a {
+                    /*サイズを固定*/
+                    width: 80px;
+                    height: 80px;
+
+                    /*アイコンの中央に配置*/
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    font-size: 50px;
+                    color: #fff;
+                    background-color: #000;
+                    padding: 20px;
+                    border-radius: 50%;
+                }
+
+                .icon a:hover {
+                    background-color: #333;
+                }
+
+                .section {
+                    margin-top: 50px;
+                    font-size: 30px;
+                }
+
+
+                .box {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                }
+
+                #text {
+                    margin-top: 10px;
+                }   
+
+                .box img {
+                    width: 80px;
+                    height: 80px;
+                }
+            </style>
+
+
+
+</body>
+<script src="https://aquarabbit62.sakura.ne.jp/sutaca-test/src/JS/common.js"></script>
+<script src="https://aquarabbit62.sakura.ne.jp/sutaca-test/src/JS/header.js"></script>
+<script src="https://aquarabbit62.sakura.ne.jp/sutaca-test/src/JS/index.js"></script>
+
+</html>

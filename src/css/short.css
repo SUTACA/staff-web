@@ -1,0 +1,271 @@
+.title {
+    background-color: #ffffff;;
+}
+h1{
+    margin: 0;
+    padding: 20px 0;
+}
+
+.cp_qa *, .cp_qa *:before, .cp_qa *:after {
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+.cp_qa {
+    margin: 0 auto;
+    padding-top: 20px;
+    background: #ffffff;
+}
+
+.cp_qa input {
+    display: none;
+}
+
+/* カテゴリー */
+.cp_qa #cp_content1,
+.cp_qa #cp_content2,
+.cp_qa #cp_content3,
+.cp_qa #cp_content4 {
+    display: none;
+    padding: 0px 0 0;
+    border-top: 1px solid #dddddd;
+}
+
+.cp_qa label.cp_tabitem {
+    display: inline-block;
+    margin: 0;
+    padding: 15px 12px;
+    text-align: center;
+    color: #bbbbbb;
+    border: 1px solid transparent;
+    height: 80px; /* 高さを設定 */
+    line-height: 100px; /* アイコンとテキストを垂直に中央揃え */
+    box-sizing: border-box;
+    font-size: 18px; /* テキストのサイズ */
+    position: relative; /* アイコンの位置調整用 */
+}
+
+.cp_qa label.cp_tabitem:before {
+    font-family: 'FontAwesome', sans-serif;
+    display: inline-block;
+    font-size: 24px; /* アイコンのサイズ */
+    vertical-align: middle; /* アイコンを中央揃え */
+    position: absolute; /* アイコンの位置を調整 */
+    left: 50%; /* アイコンの左端を中央に設定 */
+    top: 50%; /* アイコンの上端を中央に設定 */
+    transform: translate(-50%, -50%); /* アイコンの中央を中央に設定 */
+}
+
+.cp_qa label.cp_tabitem[for*='1']:before {
+    content: '\f0e7'; /* FontAwesome のホームアイコンの Unicode コード */
+}
+.cp_qa label.cp_tabitem[for*='2']:before {/* FontAwesome の財布アイコンの Unicode コード */
+    content: '\f0d6';
+}
+.cp_qa label.cp_tabitem[for*='3']:before { /* FontAwesome の服アイコンの Unicode コード */
+    content: '\f1b0';
+}
+.cp_qa label.cp_tabitem[for*='4']:before { /* FontAwesome のその他アイコンの Unicode コード */
+    content: '\f0c0';
+}
+
+/* 中央揃え */
+.cp_qa label.cp_tabitem:hover {
+    cursor: pointer;
+    color: #888888;
+}
+
+.cp_qa input:checked + label {
+    color: #555555;
+    border: 1px solid #dddddd;
+    border-bottom: 1px solid #ffffff;
+}
+
+/* --ブロックのバーの色 */
+.cp_qa input:checked + label[for*='1'] {
+    border-top: 5px solid #00BCD4;
+}
+
+.cp_qa input:checked + label[for*='2'] {
+    border-top: 5px solid #FF5722;
+}
+
+.cp_qa input:checked + label[for*='3'] {
+    border-top: 5px solid #03A9F4;
+}
+
+.cp_qa input:checked + label[for*='4'] {
+    border-top: 5px solid #E91E63;
+}
+
+/* QAブロック */
+.cp_qa #cp_conttab1:checked ~ #cp_content1,
+.cp_qa #cp_conttab2:checked ~ #cp_content2,
+.cp_qa #cp_conttab3:checked ~ #cp_content3,
+.cp_qa #cp_conttab4:checked ~ #cp_content4 {
+    /* 中央揃え */
+    margin: 0 auto;
+    display: block;
+}
+
+.cp_qa .cp_qain {
+    overflow-x: hidden;
+    margin: 0 auto;
+    color: #333333;
+}
+
+.cp_qa .cp_qain .cp_actab {
+    padding: 20px 0;
+    border-bottom: 1px dotted #cccccc;
+}
+
+/* 質問 */
+.cp_qa .cp_qain label {
+    position: relative;
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 10px 10px 20px 48px;
+    cursor: pointer;
+    /*bold*/
+    font-weight: bold;
+}
+
+/* ＋アイコン */
+.cp_qa .cp_qain .cp_plus {
+    content: '\f067'; /* FontAwesome のプラスアイコンの Unicode コード */
+    font-family: 'FontAwesome', sans-serif;
+    font-size: 2em;
+    line-height: 1;
+    transition: 0.2s ease;
+    /* 左揃え */
+    position: absolute;
+    left: 10px;
+}
+
+/* 答え */
+.cp_qa .cp_qain .cp_actab-content {
+    position: relative;
+    overflow: hidden;
+    height: 0;
+    margin: 0 10px 0 48px;
+    transition: 0.4s ease;
+    opacity: 0;
+}
+
+.cp_actab-content img {
+    margin-top: 10px;
+}
+
+/* 質問を開いた時の仕様 */
+.cp_qa .cp_qain .cp_actab input[type=checkbox]:checked ~ .cp_actab-content {
+    height: auto;
+    opacity: 1;
+}
+
+/* 質問をクリックした時の▼アイコンの動き */
+.cp_qa .cp_qain .cp_actab input[type=checkbox]:checked ~ .cp_plus {
+    transform: rotate(45deg);
+}
+
+
+/* コンテンツのスタイル */
+     .cp_content {
+        display: none;
+    }
+
+    .cp_content.active {
+        display: block;
+    }
+
+    /* 画像をタイル状に並べるためのスタイル */
+    .cp_images {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .cp_images .image-container {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .cp_images img {
+        width: 150px; /* 固定幅 */
+        height: 150px; /* 固定高さ */
+        object-fit: cover;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: opacity 0.3s;
+    }
+
+    .cp_images .image-name {
+        margin-top: 5px;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    .cp_images .status-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 80%;
+        background: rgba(255, 255, 255, 0.7); /* 半透明の背景 */
+        color: red;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 5px;
+        z-index: 1;
+        pointer-events: none; /* オーバーレイ上のクリックを防ぐ */
+    }
+
+    .cp_images img.gray-out {
+        filter: grayscale(100%); /* グレースケールでグレーアウト */
+    }
+
+    /* 詳細情報のスタイル */
+    .details {
+        width: 80vw;
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        z-index: 1000;
+    }
+
+    .details.active {
+        display: block;
+    }
+
+    .details .close {
+        font-size: 50px;
+        display: block;
+        text-align: right;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .lost-button{
+        background-color: #00BCD4;
+        color: white;
+        font-weight: 300;
+        padding: 5px 20px;
+        border-radius: 5px;
+        border-color: #00BCD4;
+        cursor: pointer;
+
+    }
+

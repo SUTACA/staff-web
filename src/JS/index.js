@@ -5,16 +5,17 @@ function load() {
         checkRole();
         document.querySelector('.menu-icom-src').src = sessionData1.userIcon;
         document.querySelector('#user_name').innerHTML = sessionData1.userName;
-        document.querySelector('#data_date').innerHTML = new Date(sessionData1.loginTime).toLocaleString();
+        //データ：9/21 10:10と表示
+        document.querySelector('#data_date').innerHTML = "データ："+new Date(sessionData1.loginTime).toLocaleString().slice(5,20);
         document.querySelector('#location_id').innerHTML = sessionData1.locationId;
         permission = permission_table_create(sessionData1.locationId)
-        
     }, 2000);
 }
 
 //scanPointがない場合は読み取りSweetAlertを表示させて入力を受け付けて保存する。（キャンセルはなし）
 if (!sessionData1.locationId) {
     Swal.fire({
+        //画面外をクリックしても
         title: config.systemMessage.locationMessage1,
         input: 'text',
         inputAttributes: {
@@ -24,16 +25,22 @@ if (!sessionData1.locationId) {
         confirmButtonText: config.systemMessage.save,
         showLoaderOnConfirm: true,
         inputPlaceholder: '例: 1234',
+        allowOutsideClick: false,
 
         preConfirm: (locationId) => {
+             //四桁を入力しているかチェック
+             if (locationId.length != 4) {
+                Swal.showValidationMessage(config.errorMessage.locationError1);
+            }
             //16進数かどうかチェック
             if (!/^[0-9A-Fa-f]{1,4}$/.test(locationId)) {
                 Swal.showValidationMessage(config.errorMessage.locationError1);
             }
+           
             sessionData1.locationId = locationId;
             sessionStorage.setItem('sessionData', JSON.stringify(sessionData1));
         },
-        allowOutsideClick: () => !Swal.isLoading()
+    
     }).then((result) => {
         if (result.isConfirmed) {
             Swal.fire({
@@ -92,62 +99,4 @@ function permission_table_create(hex) {
     console.table(permission2);
 
     return permission;
-}
-
-
-
-function check_gate(data) {
-    const prefix = data.split('-')[0]; // SA
-    // permissionオブジェクトのprefixプロパティの値を取得
-    if (permission.hasOwnProperty(prefix)) {
-        console.log(permission[prefix],1);
-        if (permission[prefix] === true) {
-            console.log('Permission granted');
-            //scan.mp3を再生
-            const audio = new Audio('./src/sound/success.mp3');
-            audio.play();
-
-            const data2 = sessionData1.data;
-            let name = '';
-            let organization = '';
-            for (let i = 0; i < data2.length; i++) {
-                if (data2[i][0] == data) {
-                    name = data2[i][1];
-                    organization = data2[i][3];
-                    break;
-                }
-            }
-            //sweetAlert('success', '許可', organization + ' ' + name);
-            Swal.fire({
-                title: organization + ' ' + name,
-                icon: 'success'
-            });
-
-            /*履歴を追加*/
-            const apiKey = 'YOUR_API_KEY4';
-            const url = `https://script.google.com/macros/s/AKfycbzuRX-iFgUNYRw5RTtpd2W3enzK7IyiTQ7Vgm5XIMfylW1GRHj4YS3IoGIKFbe8hLqHxA/exec?apiKey=${apiKey}&email=${encodeURIComponent(sessionData1.userId)}&userId=${encodeURIComponent(data)}&locationId=${encodeURIComponent(sessionData1.locationId)}`
-
-            try {
-                const response = fetch(url);
-                if (!response.ok) {
-                    throw new Error(`HTTPエラー ${response.status}`);
-                }
-            } catch (error) {
-                console.log(`エラー: ${error.message}`);
-            }
-        } else {
-            console.log('Permission denied');
-            //scan.mp3を再生
-            const audio = new Audio('./src/sound/fail.mp3');
-            audio.play();
-
-            //失敗
-            Swal.fire({
-                title: '許可されていません',
-                icon: 'error'
-            });
-        }
-    } else {
-        console.log('Permission not found');
-    }
 }

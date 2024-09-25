@@ -1,7 +1,7 @@
 {
     "name": "SUTACA -スタッフ認証システム-",
     "siteTitle": "-SUTACA-",
-    "version": "1.2.0",
+    "version": "1.5.0",
     "loginAttempt": 5,
     "loginAttemptTime": 5,
     "loginSessionTime": 5,
@@ -10,6 +10,8 @@
         "loginError1":"ログインに失敗しました。<br>アカウント情報を確認してください。",
         "loginError2":"セッションの有効期限が切れました。<br>再度ログインしてください。",
         "loginError3":"不正な画面移行です。<br>再度ログインしてください。",
+        "loginError4":"もう一度操作してください。",
+        "loginError5":"パスワードが違います。<br>再度入力してください。",
         "locationError1":"【エラー】4桁の英数字を入力してください。"
     },
     "systemMessage":{

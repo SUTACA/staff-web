@@ -36,16 +36,29 @@
     align-items: center;
 }
 
-.scan-message2 {
-    /* Center */
-    bottom: 0;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 20px;
-    color: #000000;
 
-    width: 80vw;
+.scan-message2 {
+    /* 画面下部に固定し、中央に配置 */
+    position: absolute;
+    bottom: 0%; /* カメラ映像の上に配置 */
+    left: 50%;
+    transform: translateX(-50%);
+    
+    /* 背景と文字のスタイル */
+    background-color: rgba(0, 0, 0, 0.6); /* 背景は半透明の黒 */
+    color: #ffffff; /* 文字色は白 */
+    font-size: 20px;
+    text-align: center;
+    padding: 10px 20px;
+    
+    /* ボーダーと影 */
     border-radius: 6px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* 軽い影をつける */
+
+    /* サイズ調整 */
+    width: 80vw;
+    max-width: 500px; /* 最大幅を設定 */
+    word-wrap: break-word; /* 長い文章が折り返されるように */
 }
 
 .message-description {

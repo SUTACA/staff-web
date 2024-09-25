@@ -9,7 +9,9 @@ if (location.search) {
         var errorMessages = {
             1: config.errorMessage.loginError1,
             2: config.errorMessage.loginError2,
-            3: config.errorMessage.loginError3
+            3: config.errorMessage.loginError3,
+            4: config.errorMessage.loginError4,
+            5: config.errorMessage.loginError5
         };
 
         if (errorMessages[error]) {
@@ -71,7 +73,7 @@ async function login_check(email, name, picture) {
         .then(response => response.json())
         .then(data => data.ip);
 
-    const apiKey = 'YOUR_API_KEY3'; 
+    const apiKey = 'YOUR_API_KEY3';
     const url = `https://script.google.com/macros/s/AKfycbzuRX-iFgUNYRw5RTtpd2W3enzK7IyiTQ7Vgm5XIMfylW1GRHj4YS3IoGIKFbe8hLqHxA/exec?apiKey=${apiKey}&email=${encodeURIComponent(email)}&userAgent=${encodeURIComponent(userAgent)}&ipAddress=${encodeURIComponent(ipAddress)}`;
 
     try {
@@ -98,14 +100,14 @@ async function login_check(email, name, picture) {
 }
 
 
-function login(email, name, picture,result) {
-    
+function login(email, name, picture, result) {
+
     //resultには権限が含まれている
     // 権限情報オブジェクト　admin:"管理者",leader:"リーダー",user:"通常権限"
     var role = 'user';
-    if(result[0].permission.includes('管理者')){
+    if (result[0].permission.includes('管理者')) {
         var role = 'admin';
-    }else if(result[0].permission.includes('リーダー')){
+    } else if (result[0].permission.includes('リーダー')) {
         var role = 'leader';
     }
     //result[0]は消す
@@ -131,19 +133,91 @@ function login(email, name, picture,result) {
 }
 
 function login_test() {
+    let pass = document.getElementById('pass').value;
+    if(!pass){
+        window.location.href = './login.html?error=4';
+        return;
+    }
+
+    sha256(pass).then(function (hash) {
+    console.log(hash);
+    // パスワードをハッシュ化
+    if (hash != '13ad7b7c00a47adaa9b6276ebb44ad2a79484b16357f274de29e27efc683fc6e') {
+        window.location.href = './login.html?error=5';
+        return;
+    }
     var sessionData = {
         loginFlg: true,
         userId: '1',
-        userName: 'username',
+        userName: '管理者用',
         userRole: 'admin',
         loginTime: new Date().getTime(),
         loginTime2: new Date().toLocaleString(),
         sessionExpire: new Date().getTime() + config.loginSessionTime * 60000,
         sessionExpire2: new Date().toLocaleString(),
-        userIcon: "https://lh3.googleusercontent.com/blogger_img_proxy/AEn0k_uZwVv75AsPm_8ikWihnnBQg2J_Nm8pIQIjFwgf6nnX_XoxDhP-najnhLGEGcuuWBQgkGnHRddWz2hGyaQZZ5wQpd6M-8sNm6-bo0T7y4jwpHsbQA=w72-h72-n-k-no-nu"
+        userIcon: "https://www.osakac.ac.jp/_files/news/images/SHIOTA%20Kuninari.jpg"
     };
     sessionStorage.setItem('sessionData', JSON.stringify(sessionData));
     sessionStorage.removeItem('loginError');
     sessionStorage.removeItem('loginErrorTime');
     location.href = './index.html';
+});
+}
+
+
+
+async function sha256(message) {
+    // テキストをエンコードして、ArrayBufferに変換
+    const msgBuffer = new TextEncoder().encode(message);
+    
+    // SHA-256でハッシュ化
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+    
+    // ArrayBufferを16進数の文字列に変換
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    
+    return hashHex;
+}
+
+
+function tapCorner(position) {
+    switch (position) {
+        case 'bottom-right':
+            debug = [];
+            debug.push('bottom-right');
+            break;
+        case 'top-left':
+            if (debug[0] === 'bottom-right') {
+                debug.push('top-left');
+            } else {
+                debug = [];
+            }
+            break;
+        case 'top-right':
+            if (debug[1] === 'top-left') {
+                debug.push('top-right');
+            } else {
+                debug = [];
+            }
+            break;
+        case 'bottom-left':
+            if (debug[2] === 'top-right') {
+                debug.push('bottom-left');
+            } else {
+                debug = [];
+            }
+            break;
+        default:
+            debug = [];
+            break;
+    }
+    if (debug.length === 4) {
+        // デバッグモードに移行
+        console.log('タイムアウトを無効化しました');
+        alert('タイムアウトを無効化しました.更新してください');
+        // タイムアウトを無効化 loginErrorを削除
+        sessionStorage.removeItem('loginError');
+    }
+
 }

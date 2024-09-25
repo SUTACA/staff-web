@@ -40,6 +40,10 @@ function changeLocation() {
         inputPlaceholder: '現在: ' + sessionData1.locationId,
 
         preConfirm: (locationId) => {
+            //四桁を入力しているかチェック
+            if (locationId.length != 4) {
+                Swal.showValidationMessage(config.errorMessage.locationError1);
+            }
             //16進数かどうかチェック
             if (!/^[0-9A-Fa-f]{1,4}$/.test(locationId)) {
                 Swal.showValidationMessage(config.errorMessage.locationError1);

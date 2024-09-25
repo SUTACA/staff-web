@@ -17,14 +17,19 @@ fetch('./src/config.json')
         //セッションに保存
         sessionStorage.setItem('config', JSON.stringify(data));
         document.querySelector('title').textContent = data.siteTitle + " | " + document.querySelector('title').textContent;
-        document.querySelector('.version').textContent = 'v' + data.version;
+        try {
+            document.querySelector('.version').textContent = 'v' + data.version;
+        }
+        catch (e) {
+            console.log("バージョンを上書きできません");
+        }
     });
 
 //セッションデータ 初期値
 var sessionData = {
     "userId": "",//ログインユーザーID
     "userName": "username",//ログインユーザー名
-    "userIcon": "./src/img/sutaca/icom/sutaca_icom.png",//ログインユーザーアイコン
+    "userIcon": "https://aquarabbit62.sakura.ne.jp/sutaca-test/src/img/sutaca/icom/sutaca_icom.png",//ログインユーザーアイコン
 
     //admin,leader,user
     "userRole": "user",//ログインユーザー権限
@@ -58,7 +63,7 @@ if (!location.pathname.endsWith('/login.html')) {
             sessionStorage.setItem('sessionData', JSON.stringify(sessionData));
         }
         // メインコンテンツの表示
-        const validPages = ['/index.html', '/dino.html', '/qanda.html', '/lost.html'];
+        const validPages = ['/index.html', '/dino.html', '/qanda.html', '/lost.html','/shorturl.html'];
         if (!validPages.some(page => location.pathname.endsWith(page))) {
             location.href = './index.html';
         }

@@ -6,6 +6,13 @@ body {
     font-family: 'Courier New', Courier, monospace;
 }
 
+.tels{
+    /*下線*/
+    border-bottom: 1px solid #000;
+    /*文字色*/
+    color: #3300ff;
+}
+
 a {
     text-decoration: none;
     color: #000000;
